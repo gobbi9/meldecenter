@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class MeldecenterApplication
 
 fun main(args: Array<String>) {
-	runApplication<MeldecenterApplication>(*args)
+    runApplication<MeldecenterApplication>(*args)
 }
