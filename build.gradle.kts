@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "coding.challenge"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 description = "Coding Challenge mit Spring Boot 3 und PostgreSQL"
 
 java {
@@ -52,4 +52,13 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+            "Implementation-Title" to project.name,
+            "Implementation-Version" to project.version
+        )
+    }
 }
