@@ -1,21 +1,23 @@
 package coding.challenge.meldecenter.config
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.Tracer
 import io.micrometer.tracing.annotation.NewSpan
+import kotlinx.coroutines.ThreadContextElement
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
-import org.springframework.stereotype.Component
-import kotlin.coroutines.CoroutineContext
-import io.micrometer.context.ContextSnapshot
-import kotlin.coroutines.Continuation
-import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.ThreadContextElement
 import org.slf4j.MDC
+import org.springframework.stereotype.Component
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.CoroutineContext
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Workaround, damit @NewSpan mit coroutines funktioniert
+ */
 @Aspect
 @Component
 class CoroutinesNewSpanAspect(private val tracer: Tracer) {

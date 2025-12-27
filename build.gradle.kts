@@ -1,13 +1,13 @@
-plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.5.9"
-    id("io.spring.dependency-management") version "1.1.7"
-}
-
 group = "coding.challenge"
 version = "1.0.0-SNAPSHOT"
 description = "Coding Challenge mit Spring Boot 3 und PostgreSQL"
+
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+}
 
 java {
     toolchain {
@@ -22,45 +22,58 @@ repositories {
 val mockitoAgent by configurations.creating
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.5")
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.5")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.flywaydb:flyway-core")
-    implementation("org.flywaydb:flyway-database-postgresql")
-    testRuntimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.118.Final:osx-aarch_64")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive")
-    implementation("org.springframework:spring-jdbc")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("org.zalando:logbook-spring-boot-starter:3.10.0")
-    implementation("org.zalando:logbook-netty:3.10.0")
-    implementation("org.zalando:logbook-logstash:3.10.0")
-    implementation("io.micrometer:micrometer-tracing-bridge-otel")
-    implementation(platform("io.micrometer:micrometer-bom:1.16.1"))
-    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.postgresql:r2dbc-postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:r2dbc")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.0")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.0")
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
-    testImplementation("io.mockk:mockk:1.13.10")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    mockitoAgent("net.bytebuddy:byte-buddy-agent:1.17.8")
+    // Spring Boot Starters
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.data.r2dbc)
+    implementation(libs.spring.boot.starter.webflux)
+    implementation(libs.spring.boot.starter.aop)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.spring.boot.testcontainers)
+    developmentOnly(libs.spring.boot.docker.compose)
+
+    // Spring / Reactor
+    implementation(libs.spring.jdbc)
+    implementation(libs.reactor.kotlin.extensions)
+    testImplementation(libs.reactor.test)
+
+    // Kotlin
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactor)
+    implementation(libs.kotlinx.coroutines.reactive)
+    implementation(libs.kotlin.logging)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Database
+    implementation(libs.flyway.core)
+    implementation(libs.flyway.database.postgresql)
+    runtimeOnly(libs.postgresql)
+    runtimeOnly(libs.r2dbc.postgresql)
+
+    // OpenAPI, Observability & Logging
+    implementation(libs.springdoc.openapi)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.logbook.spring.boot.starter)
+    implementation(libs.logbook.netty)
+    implementation(libs.logbook.logstash)
+    implementation(libs.micrometer.tracing.bridge.otel)
+    implementation(platform(libs.micrometer.bom))
+    implementation(libs.opentelemetry.exporter.otlp)
+
+    // Netty
+    testRuntimeOnly(libs.netty.resolver.dns.native.macos)
+
+    // Test Support
+    testImplementation(libs.testcontainers.junit.jupiter)
+    testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.testcontainers.r2dbc)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.extensions.spring)
+    testImplementation(libs.mockk)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    mockitoAgent(libs.byte.buddy.agent)
 }
 
 kotlin {
