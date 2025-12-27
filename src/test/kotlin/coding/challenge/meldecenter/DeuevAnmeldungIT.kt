@@ -25,7 +25,7 @@ class DeuevAnmeldungIT(
         }
 
         // Save them
-        repository.saveAll(updatedAnmeldungen).toList()
+        updatedAnmeldungen.forEach { repository.save(it) }
 
         // Verify updates
         val savedAnmeldungen = repository.findAll().toList()
