@@ -1,0 +1,36 @@
+{
+  "meldung": {
+    "id": "dd01fff5-778a-44ea-a87f-8ca58cad4b79",
+    "typ": "DEUEV_ANMELDUNG",
+    "quelle": "EAP_SAP_HCM",
+    "mandantId": "MANDANT_4711",
+    "erstelltAm": "2025-02-01T08:30:00Z"
+  },
+  "arbeitgeber": {
+    "betriebsnummer": "12345678"
+  },
+  "mitarbeiter": {
+    "id": "EMP-9981",
+    "vorname": "Max",
+    "nachname": "Mustermann",
+    "geburtsdatum": "1990-04-12",
+    "sozialversicherungsnummer": "65 120490 M 123",
+    "anschrift": {
+      "strasse": "Hauptstraße 10",
+      "plz": "10115",
+      "ort": "Berlin"
+    },
+    "kontakt": {
+      "email": "max.mustermann@bespiel.de",
+      "telefon": {
+        "praefix": "+49",
+        "vorwahl": "30",
+        "nummer": "1234567"
+      }
+    }
+  },
+  "beschaeftigung": {
+    "beginn": "2025-02-01",
+    "beschaeftigungsart": "SOZIALVERSICHERUNGSPFLICHTIG"
+  }
+}
