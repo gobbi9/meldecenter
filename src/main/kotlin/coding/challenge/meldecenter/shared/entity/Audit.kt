@@ -4,7 +4,7 @@ import java.time.Instant
 
 data class Audit(
     val createdAt: Instant = Instant.now(),
-    val createdBy: String,
-    var updatedAt: Instant,
-    var updatedBy: String,
+    val createdBy: String? = null,
+    var updatedAt: Instant? = null,
+    var updatedBy: String? = null,
 )
