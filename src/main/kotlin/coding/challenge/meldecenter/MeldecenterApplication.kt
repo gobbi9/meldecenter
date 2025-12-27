@@ -1,25 +1,25 @@
 package coding.challenge.meldecenter
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import jakarta.annotation.PostConstruct
+import io.micrometer.tracing.Tracer
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.handler.codec.http.HttpRequest
-import io.micrometer.tracing.Tracer
+import jakarta.annotation.PostConstruct
 import org.slf4j.MDC
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.embedded.netty.NettyServerCustomizer
 import org.springframework.context.annotation.Bean
-import org.zalando.logbook.CorrelationId
-import org.zalando.logbook.Precorrelation
+import org.springframework.web.server.WebFilter
 import org.zalando.logbook.Correlation
+import org.zalando.logbook.CorrelationId
 import org.zalando.logbook.HttpLogWriter
 import org.zalando.logbook.Logbook
+import org.zalando.logbook.Precorrelation
 import org.zalando.logbook.core.DefaultHttpLogWriter
 import org.zalando.logbook.netty.LogbookServerHandler
 import reactor.core.publisher.Hooks
-import org.springframework.web.server.WebFilter
 import java.util.concurrent.ConcurrentHashMap
 
 private val log = KotlinLogging.logger {}
@@ -53,17 +53,25 @@ class MeldecenterApplication {
     fun logbookNettyCustomizer(logbook: Logbook): NettyServerCustomizer {
         return NettyServerCustomizer { httpServer ->
             httpServer.doOnConnection { connection ->
-                connection.addHandlerFirst("traceIdEnsurer", object : ChannelInboundHandlerAdapter() {
-                    override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
-                        if (msg is HttpRequest) {
-                            val headers = msg.headers()
-                            if (!headers.contains("X-Logbook-Key")) {
-                                headers.add("X-Logbook-Key", java.util.UUID.randomUUID().toString())
+                connection.addHandlerFirst(
+                    "traceIdEnsurer",
+                    object : ChannelInboundHandlerAdapter() {
+                        override fun channelRead(
+                            ctx: ChannelHandlerContext,
+                            msg: Any,
+                        ) {
+                            if (msg is HttpRequest) {
+                                val headers = msg.headers()
+                                if (!headers.contains("X-Logbook-Key")) {
+                                    headers.add(
+                                        "X-Logbook-Key",
+                                        java.util.UUID.randomUUID().toString()
+                                    )
+                                }
                             }
+                            super.channelRead(ctx, msg)
                         }
-                        super.channelRead(ctx, msg)
-                    }
-                })
+                    })
                 connection.addHandlerLast(LogbookServerHandler(logbook))
             }
         }
@@ -72,7 +80,9 @@ class MeldecenterApplication {
     @Bean
     fun traceIdCorrelationId(): CorrelationId {
         return CorrelationId { request ->
-            request.headers["X-Logbook-Key"]?.firstOrNull() ?: java.util.UUID.randomUUID().toString()
+            request.headers["X-Logbook-Key"]?.firstOrNull() ?: java.util.UUID
+                .randomUUID()
+                .toString()
         }
     }
 
@@ -80,8 +90,16 @@ class MeldecenterApplication {
     fun mdcHttpLogWriter(): HttpLogWriter {
         val delegate = DefaultHttpLogWriter()
         return object : HttpLogWriter {
-            override fun write(precorrelation: Precorrelation, request: String) {
-                writeWithMdc(precorrelation.id) { delegate.write(precorrelation, request) }
+            override fun write(
+                precorrelation: Precorrelation,
+                request: String,
+            ) {
+                writeWithMdc(precorrelation.id) {
+                    delegate.write(
+                        precorrelation,
+                        request
+                    )
+                }
             }
 
             override fun write(correlation: Correlation, response: String) {
