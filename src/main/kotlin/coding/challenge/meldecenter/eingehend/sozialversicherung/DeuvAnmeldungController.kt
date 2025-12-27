@@ -1,10 +1,15 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 
 private val log = KotlinLogging.logger {}
 
@@ -16,21 +21,27 @@ private val log = KotlinLogging.logger {}
 @RequestMapping("/v1/sozialversicherung/deuev-anmeldung")
 @Tag(name = "DEÜV-Anmeldung", description = "Endpunkte für DEÜV-Anmeldungen")
 class DeuvAnmeldungController(
-    private val service: DeuvAnmeldungService
+    private val deuvAnmeldungService: DeuvAnmeldungService,
 ) {
 
     /**
      * Empfängt und speichert eine DEÜV-Anmeldung.
-     * @param dto Die Anmeldung im JSON-Format.
+     * @param deuvAnmeldungDto Die Anmeldung im JSON-Format.
      * @return Die gespeicherte Anmeldung.
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "DEÜV-Anmeldung empfangen", description = "Empfängt eine DEÜV-Anmeldung und speichert diese.")
-    suspend fun postDeuevAnmeldung(@RequestBody dto: DeuvAnmeldungDto): DeuevAnmeldungEntity {
+    @Operation(
+        summary = "DEÜV-Anmeldung empfangen",
+        description = "Empfängt eine DEÜV-Anmeldung und speichert diese."
+    )
+    @NewSpan
+    suspend fun postDeuevAnmeldung(
+        @RequestBody deuvAnmeldungDto: DeuvAnmeldungDto,
+    ): DeuvAnmeldungDto {
         log.debug { "POST /v1/sozialversicherung/deuev-anmeldung aufgerufen" }
-        log.trace { "Request Body: $dto" }
+        log.trace { "Request Body: $deuvAnmeldungDto" }
 
-        return service.save(dto)
+        return deuvAnmeldungService.save(deuvAnmeldungDto)
     }
 }

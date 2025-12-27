@@ -9,5 +9,11 @@ services:
       - '5432:5432'
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
+  jaeger:
+    image: 'jaegertracing/all-in-one:1.64'
+    ports:
+      - '16686:16686' # UI
+      - '4317:4317'  # OTLP gRPC
+      - '4318:4318'  # OTLP HTTP
 volumes:
   postgres-data:

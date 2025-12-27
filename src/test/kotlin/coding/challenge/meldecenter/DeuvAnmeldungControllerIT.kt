@@ -27,7 +27,7 @@ class DeuvAnmeldungControllerIT(
             .expectStatus().isCreated
             .expectBody()
             .jsonPath("$.meldecenterId").exists()
-            .jsonPath("$.meldungId").isEqualTo("dd01fff5-778a-44ea-a87f-8ca58cad4b79")
+            .jsonPath("$.meldung.id").isEqualTo("dd01fff5-778a-44ea-a87f-8ca58cad4b79")
 
         val saved = repository.findAll().toList()
         saved.any { it.meldungId.toString() == "dd01fff5-778a-44ea-a87f-8ca58cad4b79" } shouldBe true

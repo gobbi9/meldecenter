@@ -9,6 +9,7 @@ import java.util.UUID
  * Beispiel: DeuvAnmeldungDto(meldung = MeldungDto(...), ...)
  */
 data class DeuvAnmeldungDto(
+    val meldecenterId: UUID? = null,
     val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
     val mitarbeiter: MitarbeiterDto,
@@ -87,31 +88,3 @@ data class BeschaeftigungDto(
     val beschaeftigungsart: String
 )
 
-/**
- * Mapping-Funktion von DTO zu Entity.
- * Wandelt ein DeuvAnmeldungDto in eine DeuevAnmeldungEntity um.
- */
-fun DeuvAnmeldungDto.toEntity(): DeuevAnmeldungEntity {
-    return DeuevAnmeldungEntity(
-        meldungId = meldung.id,
-        meldungTyp = meldung.typ,
-        meldungQuelle = meldung.quelle,
-        meldungMandantId = meldung.mandantId,
-        meldungErstelltAm = meldung.erstelltAm,
-        arbeitgeberBetriebsnummer = arbeitgeber.betriebsnummer,
-        mitarbeiterId = mitarbeiter.id,
-        mitarbeiterVorname = mitarbeiter.vorname,
-        mitarbeiterNachname = mitarbeiter.nachname,
-        mitarbeiterGeburtsdatum = mitarbeiter.geburtsdatum,
-        mitarbeiterSozialversicherungsnummer = mitarbeiter.sozialversicherungsnummer,
-        mitarbeiterAnschriftStrasse = mitarbeiter.anschrift.strasse,
-        mitarbeiterAnschriftPlz = mitarbeiter.anschrift.plz,
-        mitarbeiterAnschriftOrt = mitarbeiter.anschrift.ort,
-        mitarbeiterKontaktEmail = mitarbeiter.kontakt.email,
-        mitarbeiterKontaktTelefonPraefix = mitarbeiter.kontakt.telefon.praefix,
-        mitarbeiterKontaktTelefonVorwahl = mitarbeiter.kontakt.telefon.vorwahl,
-        mitarbeiterKontaktTelefonNummer = mitarbeiter.kontakt.telefon.nummer,
-        beschaeftigungBeginn = beschaeftigung.beginn,
-        beschaeftigungBeschaeftigungsart = beschaeftigung.beschaeftigungsart
-    )
-}

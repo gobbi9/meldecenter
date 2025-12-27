@@ -1,0 +1,72 @@
+package coding.challenge.meldecenter.eingehend.sozialversicherung
+
+/**
+ * Mapping [DeuvAnmeldungDto] zu [DeuevAnmeldungEntity].
+ */
+fun DeuvAnmeldungDto.toEntity(): DeuevAnmeldungEntity {
+    return DeuevAnmeldungEntity(
+        meldungId = meldung.id,
+        meldungTyp = meldung.typ,
+        meldungQuelle = meldung.quelle,
+        meldungMandantId = meldung.mandantId,
+        meldungErstelltAm = meldung.erstelltAm,
+        arbeitgeberBetriebsnummer = arbeitgeber.betriebsnummer,
+        mitarbeiterId = mitarbeiter.id,
+        mitarbeiterVorname = mitarbeiter.vorname,
+        mitarbeiterNachname = mitarbeiter.nachname,
+        mitarbeiterGeburtsdatum = mitarbeiter.geburtsdatum,
+        mitarbeiterSozialversicherungsnummer = mitarbeiter.sozialversicherungsnummer,
+        mitarbeiterAnschriftStrasse = mitarbeiter.anschrift.strasse,
+        mitarbeiterAnschriftPlz = mitarbeiter.anschrift.plz,
+        mitarbeiterAnschriftOrt = mitarbeiter.anschrift.ort,
+        mitarbeiterKontaktEmail = mitarbeiter.kontakt.email,
+        mitarbeiterKontaktTelefonPraefix = mitarbeiter.kontakt.telefon.praefix,
+        mitarbeiterKontaktTelefonVorwahl = mitarbeiter.kontakt.telefon.vorwahl,
+        mitarbeiterKontaktTelefonNummer = mitarbeiter.kontakt.telefon.nummer,
+        beschaeftigungBeginn = beschaeftigung.beginn,
+        beschaeftigungBeschaeftigungsart = beschaeftigung.beschaeftigungsart
+    )
+}
+
+/**
+ * Mapping [DeuevAnmeldungEntity] zu [DeuvAnmeldungDto].
+ */
+fun DeuevAnmeldungEntity.toDto(): DeuvAnmeldungDto {
+    return DeuvAnmeldungDto(
+        meldecenterId = meldecenterId,
+        meldung = MeldungDto(
+            id = meldungId,
+            typ = meldungTyp,
+            quelle = meldungQuelle,
+            mandantId = meldungMandantId,
+            erstelltAm = meldungErstelltAm
+        ),
+        arbeitgeber = ArbeitgeberDto(
+            betriebsnummer = arbeitgeberBetriebsnummer
+        ),
+        mitarbeiter = MitarbeiterDto(
+            id = mitarbeiterId,
+            vorname = mitarbeiterVorname,
+            nachname = mitarbeiterNachname,
+            geburtsdatum = mitarbeiterGeburtsdatum,
+            sozialversicherungsnummer = mitarbeiterSozialversicherungsnummer,
+            anschrift = AnschriftDto(
+                strasse = mitarbeiterAnschriftStrasse,
+                plz = mitarbeiterAnschriftPlz,
+                ort = mitarbeiterAnschriftOrt
+            ),
+            kontakt = KontaktDto(
+                email = mitarbeiterKontaktEmail,
+                telefon = TelefonDto(
+                    praefix = mitarbeiterKontaktTelefonPraefix,
+                    vorwahl = mitarbeiterKontaktTelefonVorwahl,
+                    nummer = mitarbeiterKontaktTelefonNummer
+                )
+            )
+        ),
+        beschaeftigung = BeschaeftigungDto(
+            beginn = beschaeftigungBeginn,
+            beschaeftigungsart = beschaeftigungBeschaeftigungsart
+        )
+    )
+}

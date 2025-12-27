@@ -1,6 +1,7 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.micrometer.tracing.annotation.NewSpan
 import org.springframework.stereotype.Service
 
 private val log = KotlinLogging.logger {}
@@ -11,23 +12,23 @@ private val log = KotlinLogging.logger {}
  */
 @Service
 class DeuvAnmeldungService(
-    private val repository: DeuevAnmeldungRepository,
+    private val deuevAnmeldungRepository: DeuevAnmeldungRepository,
 ) {
 
     /**
      * Speichert eine DEÜV-Anmeldung.
-     * @param dto Die zu speichernde Anmeldung als DTO.
-     * @return Die gespeicherte Entity.
+     * @param deuvAnmeldungDto Die zu speichernde Anmeldung als DTO.
+     * @return Das gespeicherte DTO.
      */
-    suspend fun save(dto: DeuvAnmeldungDto): DeuevAnmeldungEntity {
-        log.debug { "Speichere DEÜV-Anmeldung mit ID: ${dto.meldung.id}" }
-        log.trace { "DTO Details: $dto" }
+    @NewSpan
+    suspend fun save(deuvAnmeldungDto: DeuvAnmeldungDto): DeuvAnmeldungDto {
+        log.debug { "Speichere DEÜV-Anmeldung mit ID: ${deuvAnmeldungDto.meldung.id}" }
+        log.trace { "DTO Details: $deuvAnmeldungDto" }
 
-        val entity = dto.toEntity()
+        val savedDeuvAnmeldungEntity =
+            deuevAnmeldungRepository.save(deuvAnmeldungDto.toEntity())
 
-        repository.save(entity)
-
-        log.debug { "DEÜV-Anmeldung erfolgreich gespeichert. Meldecenter-ID: ${entity.meldecenterId}" }
-        return entity
+        log.debug { "DEÜV-Anmeldung erfolgreich gespeichert. Meldecenter-ID: ${savedDeuvAnmeldungEntity.meldecenterId}" }
+        return savedDeuvAnmeldungEntity.toDto()
     }
 }
