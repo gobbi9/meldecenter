@@ -1,15 +1,11 @@
 package coding.challenge.meldecenter
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-@Import(TestcontainersConfiguration::class)
-@SpringBootTest
-class MeldecenterApplicationTests {
-
-    @Test
-    fun contextLoads() {
+@MeldecenterSpringBootTest
+class MeldecenterApplicationTests : StringSpec({
+    "context loads" {
+        1 shouldBe 1
     }
-
-}
+})
