@@ -1,4 +1,4 @@
-package coding.challenge.meldecenter
+package coding.challenge.meldecenter.testconfig
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.extensions.spring.SpringExtension

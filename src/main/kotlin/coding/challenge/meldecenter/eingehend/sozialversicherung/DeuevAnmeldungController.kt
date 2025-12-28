@@ -63,6 +63,7 @@ class DeuevAnmeldungController(
         summary = "DEÜV-Anmeldungen lesen",
         description = "Liest alle DEÜV-Anmeldungen paginiert aus."
     )
+    @NewSpan
     fun getDeuevAnmeldungen(
         @PageableDefault(
             size = 10,

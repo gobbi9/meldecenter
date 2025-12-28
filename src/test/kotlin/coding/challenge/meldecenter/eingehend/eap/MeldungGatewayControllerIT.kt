@@ -1,4 +1,6 @@
-package coding.challenge.meldecenter
+package coding.challenge.meldecenter.eingehend.eap
+
+import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
 import io.kotest.core.spec.style.StringSpec

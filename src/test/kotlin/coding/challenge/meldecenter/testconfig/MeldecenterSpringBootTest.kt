@@ -1,4 +1,4 @@
-package coding.challenge.meldecenter
+package coding.challenge.meldecenter.testconfig
 
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import

@@ -1,6 +1,7 @@
-package coding.challenge.meldecenter
+package coding.challenge.meldecenter.eingehend.sozialversicherung
 
-import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
+import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
+
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.nulls.shouldNotBeNull

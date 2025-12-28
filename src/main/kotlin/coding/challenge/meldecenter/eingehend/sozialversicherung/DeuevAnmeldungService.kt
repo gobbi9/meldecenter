@@ -41,6 +41,7 @@ class DeuevAnmeldungService(
      * @param pageable Die Pagination-Informationen.
      * @return Ein Flow von DEÜV-Anmeldungen.
      */
+    @NewSpan
     fun findAll(pageable: Pageable): Flow<DeuevAnmeldungDto> {
         log.debug { "Lade DEÜV-Anmeldungen mit Pagination: $pageable" }
         return deuevAnmeldungRepository.findAllBy(pageable).map { it.toDto() }
