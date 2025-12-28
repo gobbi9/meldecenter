@@ -4,6 +4,7 @@ import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.sozialversicherung.BeschaeftigungDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
+import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuvAnmeldundKontaktDto
 import java.util.UUID
 
 /**
@@ -14,7 +15,7 @@ data class DeuvAnmeldungDto(
     val meldecenterId: UUID? = null,
     val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
-    val mitarbeiter: MitarbeiterDto,
+    val mitarbeiter: MitarbeiterDto<DeuvAnmeldundKontaktDto>,
     val beschaeftigung: BeschaeftigungDto
 ) : Meldung
 

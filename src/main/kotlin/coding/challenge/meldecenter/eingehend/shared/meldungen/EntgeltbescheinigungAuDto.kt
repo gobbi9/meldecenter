@@ -5,6 +5,7 @@ import coding.challenge.meldecenter.eingehend.krankenkasse.KrankheitDto
 import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
+import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuKontaktDto
 import java.util.UUID
 
 /**
@@ -14,7 +15,7 @@ data class EntgeltbescheinigungAuDto(
     val meldecenterId: UUID? = null,
     val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
-    val mitarbeiter: MitarbeiterDto,
+    val mitarbeiter: MitarbeiterDto<EntgeltbescheinigungAuKontaktDto>,
     val krankheit: KrankheitDto,
     val entgelt: EntgeltDto
 ) : Meldung
