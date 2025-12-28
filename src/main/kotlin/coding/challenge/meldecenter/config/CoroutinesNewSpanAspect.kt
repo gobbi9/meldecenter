@@ -2,6 +2,7 @@ package coding.challenge.meldecenter.config
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.Tracer
+import io.micrometer.tracing.Span
 import io.micrometer.tracing.annotation.NewSpan
 import kotlinx.coroutines.ThreadContextElement
 import org.aspectj.lang.ProceedingJoinPoint
@@ -57,7 +58,9 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
 
         val wrappedContinuation = object : Continuation<Any?> {
             override val context: CoroutineContext
-                get() = continuation.context + MdcContextElement(nextSpan.context().traceId(), nextSpan.context().spanId())
+                get() = continuation.context +
+                        MdcContextElement(nextSpan.context().traceId(), nextSpan.context().spanId()) +
+                        TracingContextElement(tracer, nextSpan)
 
             override fun resumeWith(result: Result<Any?>) {
                 try {
@@ -77,7 +80,11 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
             MDC.put("traceId", nextSpan.context().traceId())
             MDC.put("spanId", nextSpan.context().spanId())
             try {
-                pjp.proceed(newArgs)
+                val result = pjp.proceed(newArgs)
+                if (result != kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED) {
+                    nextSpan.end()
+                }
+                result
             } finally {
                 if (oldTraceId != null) MDC.put("traceId", oldTraceId) else MDC.remove("traceId")
                 if (oldSpanId != null) MDC.put("spanId", oldSpanId) else MDC.remove("spanId")
@@ -91,19 +98,32 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         }
     }
 
-    class MdcContextElement(private val traceId: String, private val spanId: String) : ThreadContextElement<Map<String, String>> {
+    class MdcContextElement(private val traceId: String, private val spanId: String) : ThreadContextElement<Map<String, String>?> {
         override val key: CoroutineContext.Key<*> get() = Key
         companion object Key : CoroutineContext.Key<MdcContextElement>
 
-        override fun updateThreadContext(context: CoroutineContext): Map<String, String> {
-            val oldState = MDC.getCopyOfContextMap() ?: emptyMap()
+        override fun updateThreadContext(context: CoroutineContext): Map<String, String>? {
+            val oldState = MDC.getCopyOfContextMap()
             MDC.put("traceId", traceId)
             MDC.put("spanId", spanId)
             return oldState
         }
 
-        override fun restoreThreadContext(context: CoroutineContext, oldState: Map<String, String>) {
-            MDC.setContextMap(oldState)
+        override fun restoreThreadContext(context: CoroutineContext, oldState: Map<String, String>?) {
+            if (oldState != null) MDC.setContextMap(oldState) else MDC.clear()
+        }
+    }
+
+    class TracingContextElement(private val tracer: Tracer, private val span: Span) : ThreadContextElement<Tracer.SpanInScope> {
+        override val key: CoroutineContext.Key<*> get() = Key
+        companion object Key : CoroutineContext.Key<TracingContextElement>
+
+        override fun updateThreadContext(context: CoroutineContext): Tracer.SpanInScope {
+            return tracer.withSpan(span)
+        }
+
+        override fun restoreThreadContext(context: CoroutineContext, oldState: Tracer.SpanInScope) {
+            oldState.close()
         }
     }
 }
