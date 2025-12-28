@@ -24,6 +24,7 @@ val mockitoAgent by configurations.creating
 dependencies {
     // Spring Boot Starters
     implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.jdbc)
     implementation(libs.spring.boot.starter.data.r2dbc)
     implementation(libs.spring.boot.starter.webflux)
     implementation(libs.spring.boot.starter.aop)
@@ -87,7 +88,8 @@ tasks.withType<Test> {
     jvmArgs("-javaagent:${mockitoAgent.asPath}")
     testLogging {
         showStandardStreams = true
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        exceptionFormat =
+            org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
 
@@ -98,4 +100,12 @@ tasks.jar {
             "Implementation-Version" to project.version
         )
     }
+}
+
+tasks.register<Exec>("composeUp") {
+    group = "docker"
+    description = "Runs ./gradlew bootJar && docker-compose up --build -d"
+
+    dependsOn(tasks.bootJar)
+    commandLine("sh", "-c", "docker compose up --build -d")
 }

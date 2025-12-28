@@ -1,4 +1,18 @@
 services:
+  meldecenter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    labels:
+      # starting the spring boot application per IDE or ./gradlew bootRun
+      # should not start another copy of itself
+      org.springframework.boot.ignore: true
+    environment:
+      - DB_URL=r2dbc:postgresql://postgres:5432/meldecenter
+      - FLYWAY_JDBC_URL=jdbc:postgresql://postgres:5432/meldecenter
+      - TRACING_ENDPOINT=http://jaeger:4318/v1/traces
   postgres:
     image: 'postgres:18.1-alpine'
     environment:
@@ -10,7 +24,7 @@ services:
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
   jaeger:
-    image: 'jaegertracing/all-in-one:1.64'
+    image: 'jaegertracing/all-in-one:1.76.0'
     ports:
       - '16686:16686' # UI
       - '4317:4317'  # OTLP gRPC

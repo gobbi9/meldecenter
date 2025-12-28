@@ -6,6 +6,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
+import java.time.Instant
 import java.util.UUID
 
 @MeldecenterSpringBootTest
@@ -24,7 +25,19 @@ class DeuevAnmeldungRepositoryIT(
         val newEntity = anmeldung.copy(meldecenterId = newId, version = null)
         repository.save(newEntity)
         val savedAnmeldung = repository.findById(newId)
+
         savedAnmeldung.shouldNotBeNull()
         savedAnmeldung.meldecenterId shouldBe newId
+    }
+
+    "Should update an entity" {
+        val anmeldung = repository.findAll().first()
+        val now = Instant.now()
+        anmeldung.auditUpdatedAt = now
+        repository.save(anmeldung)
+        val updatedAnmeldung = repository.findById(anmeldung.meldecenterId)
+
+        updatedAnmeldung.shouldNotBeNull()
+        updatedAnmeldung.auditUpdatedAt shouldBe now
     }
 })
