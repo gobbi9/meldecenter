@@ -1,15 +1,11 @@
 package coding.challenge.meldecenter.eingehend.shared.meldungen
 
-import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.time.Instant
 import java.util.UUID
 
 /** Eine generische Meldung */
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
-@JsonSubTypes(
-    JsonSubTypes.Type(value = DeuvAnmeldungDto::class)
-)
 sealed interface Meldung {
     val meldung: MeldungDto
 }

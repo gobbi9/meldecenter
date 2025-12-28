@@ -19,7 +19,6 @@ repositories {
     mavenCentral()
 }
 
-val mockitoAgent by configurations.creating
 
 dependencies {
     // Spring Boot Reactive Web
@@ -61,7 +60,7 @@ dependencies {
     implementation(libs.spring.boot.starter.aop)
 
     // MacOS DNS fix
-    testRuntimeOnly(libs.netty.resolver.dns.native.macos)
+    testRuntimeOnly("io.netty:netty-resolver-dns-native-macos:${libs.versions.netty.get()}:osx-aarch_64")
 
     // Test Support
     testImplementation(libs.spring.boot.starter.test)
@@ -70,8 +69,6 @@ dependencies {
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.testcontainers.r2dbc)
     testRuntimeOnly(libs.junit.platform.launcher)
-    // Remove warning when running tests
-    mockitoAgent(libs.byte.buddy.agent)
     // Kotlin testing
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
@@ -89,12 +86,6 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    jvmArgs("-javaagent:${mockitoAgent.asPath}")
-    testLogging {
-        showStandardStreams = true
-        exceptionFormat =
-            org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-    }
 }
 
 tasks.jar {
