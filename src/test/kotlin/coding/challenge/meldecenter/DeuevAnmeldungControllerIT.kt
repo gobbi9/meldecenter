@@ -31,4 +31,26 @@ class DeuevAnmeldungControllerIT(
         val saved = repository.findAll().toList()
         saved.any { it.meldungId.toString() == "dd01fff5-778a-44ea-a87f-8ca58cad4b79" } shouldBe true
     }
+
+    "GET /v1/sozialversicherung/deuev-anmeldung should return paginated results" {
+        // Given there are at least 2 entries from test data migration
+
+        // When requesting first page with size 1
+        webTestClient.get()
+            .uri("/v1/sozialversicherung/deuev-anmeldung?page=0&size=1&sort=meldecenterId,asc")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .jsonPath("$.length()").isEqualTo(1)
+            .jsonPath("$[0].meldecenterId").isEqualTo("00000000-0000-0000-0000-000000000001")
+
+        // When requesting second page with size 1
+        webTestClient.get()
+            .uri("/v1/sozialversicherung/deuev-anmeldung?page=1&size=1&sort=meldecenterId,asc")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .jsonPath("$.length()").isEqualTo(1)
+            .jsonPath("$[0].meldecenterId").isEqualTo("00000000-0000-0000-0000-000000000002")
+    }
 })

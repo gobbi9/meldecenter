@@ -1,6 +1,9 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+import org.springframework.data.repository.kotlin.CoroutineSortingRepository
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 /**
@@ -8,4 +11,8 @@ import java.util.UUID
  * Ermöglicht CRUD-Operationen auf der DEUEV_ANMELDUNG Tabelle.
  */
 interface DeuevAnmeldungRepository :
-    CoroutineCrudRepository<DeuevAnmeldungEntity, UUID>
+    CoroutineCrudRepository<DeuevAnmeldungEntity, UUID>,
+    CoroutineSortingRepository<DeuevAnmeldungEntity, UUID> {
+
+    fun findAllBy(pageable: Pageable): Flow<DeuevAnmeldungEntity>
+}

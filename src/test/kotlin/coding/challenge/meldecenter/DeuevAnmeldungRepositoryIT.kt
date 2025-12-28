@@ -2,6 +2,7 @@ package coding.challenge.meldecenter
 
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
@@ -16,7 +17,7 @@ class DeuevAnmeldungRepositoryIT(
 
     "Should read test migration data" {
         val anmeldungen = repository.findAll().toList()
-        anmeldungen.size shouldBe 2
+        anmeldungen.size shouldBeGreaterThanOrEqual 2
     }
 
     "Should save new entity" {

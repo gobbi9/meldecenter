@@ -5,7 +5,12 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import kotlinx.coroutines.flow.Flow
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -44,5 +49,28 @@ class DeuevAnmeldungController(
         log.trace { "Request Body: $deuevAnmeldungDto" }
 
         return deuevAnmeldungService.save(deuevAnmeldungDto)
+    }
+
+    /**
+     * Liest DEÜV-Anmeldungen paginiert aus.
+     * @param page Die Seitenzahl (0-basiert).
+     * @param size Die Anzahl der Elemente pro Seite.
+     * @param sort Die Sortierung.
+     * @return Ein Flow von DEÜV-Anmeldungen.
+     */
+    @GetMapping
+    @Operation(
+        summary = "DEÜV-Anmeldungen lesen",
+        description = "Liest alle DEÜV-Anmeldungen paginiert aus."
+    )
+    fun getDeuevAnmeldungen(
+        @PageableDefault(
+            size = 10,
+            sort = ["meldecenterId"],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): Flow<DeuevAnmeldungDto> {
+        log.debug { "GET /v1/sozialversicherung/deuev-anmeldung aufgerufen mit pageable=$pageable" }
+        return deuevAnmeldungService.findAll(pageable)
     }
 }

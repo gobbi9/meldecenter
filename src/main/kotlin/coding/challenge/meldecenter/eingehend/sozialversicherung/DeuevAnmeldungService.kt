@@ -3,6 +3,9 @@ package coding.challenge.meldecenter.eingehend.sozialversicherung
 import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 private val log = KotlinLogging.logger {}
@@ -31,5 +34,15 @@ class DeuevAnmeldungService(
 
         log.debug { "DEÜV-Anmeldung erfolgreich gespeichert. Meldecenter-ID: ${savedDeuevAnmeldungEntity.meldecenterId}" }
         return savedDeuevAnmeldungEntity.toDto()
+    }
+
+    /**
+     * Gibt alle DEÜV-Anmeldungen paginiert zurück.
+     * @param pageable Die Pagination-Informationen.
+     * @return Ein Flow von DEÜV-Anmeldungen.
+     */
+    fun findAll(pageable: Pageable): Flow<DeuevAnmeldungDto> {
+        log.debug { "Lade DEÜV-Anmeldungen mit Pagination: $pageable" }
+        return deuevAnmeldungRepository.findAllBy(pageable).map { it.toDto() }
     }
 }
