@@ -14,7 +14,7 @@ services:
       - FLYWAY_JDBC_URL=jdbc:postgresql://postgres:5432/meldecenter
       - TRACING_ENDPOINT=http://jaeger:4318/v1/traces
   postgres:
-    image: 'postgres:18.1-alpine'
+    image: 'postgres:17.7-alpine'
     environment:
       - 'POSTGRES_DB=meldecenter'
       - 'POSTGRES_USER=admin'

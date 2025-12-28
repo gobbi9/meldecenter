@@ -22,18 +22,13 @@ repositories {
 val mockitoAgent by configurations.creating
 
 dependencies {
-    // Spring Boot Starters
-    implementation(libs.spring.boot.starter.actuator)
-    implementation(libs.spring.boot.starter.jdbc)
-    implementation(libs.spring.boot.starter.data.r2dbc)
+    // Spring Boot Reactive Web
     implementation(libs.spring.boot.starter.webflux)
-    implementation(libs.spring.boot.starter.aop)
-    testImplementation(libs.spring.boot.starter.test)
-    testImplementation(libs.spring.boot.testcontainers)
+
+    // Run docker-compose when starting the application locally
     developmentOnly(libs.spring.boot.docker.compose)
 
-    // Spring / Reactor
-    implementation(libs.spring.jdbc)
+    // Reactor
     implementation(libs.reactor.kotlin.extensions)
     testImplementation(libs.reactor.test)
 
@@ -43,38 +38,47 @@ dependencies {
     implementation(libs.kotlinx.coroutines.reactor)
     implementation(libs.kotlinx.coroutines.reactive)
     implementation(libs.kotlin.logging)
-    testImplementation(libs.kotlin.test.junit5)
-    testImplementation(libs.kotlinx.coroutines.test)
+    implementation(libs.jackson.module.kotlin)
 
     // Database
+    implementation(libs.spring.boot.starter.jdbc)
+    implementation(libs.spring.boot.starter.data.r2dbc)
     implementation(libs.flyway.core)
+    implementation(libs.spring.jdbc)
     implementation(libs.flyway.database.postgresql)
     runtimeOnly(libs.postgresql)
     runtimeOnly(libs.r2dbc.postgresql)
 
     // OpenAPI, Observability & Logging
     implementation(libs.springdoc.openapi)
-    implementation(libs.jackson.module.kotlin)
+    implementation(libs.spring.boot.starter.actuator)
     implementation(libs.logbook.spring.boot.starter)
     implementation(libs.logbook.netty)
     implementation(libs.logbook.logstash)
     implementation(libs.micrometer.tracing.bridge.otel)
     implementation(platform(libs.micrometer.bom))
     implementation(libs.opentelemetry.exporter.otlp)
+    implementation(libs.spring.boot.starter.aop)
 
-    // Netty
+    // MacOS DNS fix
     testRuntimeOnly(libs.netty.resolver.dns.native.macos)
 
     // Test Support
+    testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.testcontainers.junit.jupiter)
+    testImplementation(libs.spring.boot.testcontainers)
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.testcontainers.r2dbc)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    // Remove warning when running tests
+    mockitoAgent(libs.byte.buddy.agent)
+    // Kotlin testing
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.extensions.spring)
     testImplementation(libs.mockk)
-    testRuntimeOnly(libs.junit.platform.launcher)
-    mockitoAgent(libs.byte.buddy.agent)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 kotlin {

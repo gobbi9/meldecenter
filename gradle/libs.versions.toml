@@ -19,56 +19,60 @@ spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 
 [libraries]
-# Spring Boot Starters
-spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
-spring-boot-starter-jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc" }
-spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc" }
+# Spring Boot Reactive Web
 spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
-spring-boot-starter-aop = { group = "org.springframework.boot", name = "spring-boot-starter-aop" }
-spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
-spring-boot-testcontainers = { group = "org.springframework.boot", name = "spring-boot-testcontainers" }
+
+# Run docker-compose when starting the application locally
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose" }
 
-# Spring / Reactor
-spring-jdbc = { group = "org.springframework", name = "spring-jdbc" }
+# Reactor
 reactor-kotlin-extensions = { group = "io.projectreactor.kotlin", name = "reactor-kotlin-extensions" }
 reactor-test = { group = "io.projectreactor", name = "reactor-test" }
 
 # Kotlin
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect" }
-kotlin-test-junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit5" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core" }
 kotlinx-coroutines-reactor = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor" }
 kotlinx-coroutines-reactive = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive" }
-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlinLogging" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin" }
 
 # Database
+spring-boot-starter-jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc" }
+spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc" }
 flyway-core = { group = "org.flywaydb", name = "flyway-core" }
+spring-jdbc = { group = "org.springframework", name = "spring-jdbc" }
 flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql" }
 postgresql = { group = "org.postgresql", name = "postgresql" }
 r2dbc-postgresql = { group = "org.postgresql", name = "r2dbc-postgresql" }
 
 # OpenAPI, Observability & Logging
 springdoc-openapi = { group = "org.springdoc", name = "springdoc-openapi-starter-webflux-ui", version.ref = "springDoc" }
-jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin" }
+spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
 logbook-spring-boot-starter = { group = "org.zalando", name = "logbook-spring-boot-starter", version.ref = "logbook" }
 logbook-netty = { group = "org.zalando", name = "logbook-netty", version.ref = "logbook" }
 logbook-logstash = { group = "org.zalando", name = "logbook-logstash", version.ref = "logbook" }
 micrometer-tracing-bridge-otel = { group = "io.micrometer", name = "micrometer-tracing-bridge-otel" }
 micrometer-bom = { group = "io.micrometer", name = "micrometer-bom", version.ref = "micrometer" }
 opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp" }
+spring-boot-starter-aop = { group = "org.springframework.boot", name = "spring-boot-starter-aop" }
 
-# Netty
+# MacOS DNS fix
 netty-resolver-dns-native-macos = { group = "io.netty", name = "netty-resolver-dns-native-macos", version.ref = "netty" }
 
 # Test Support
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
 testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter" }
+spring-boot-testcontainers = { group = "org.springframework.boot", name = "spring-boot-testcontainers" }
 testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql" }
 testcontainers-r2dbc = { group = "org.testcontainers", name = "r2dbc" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+byte-buddy-agent = { group = "net.bytebuddy", name = "byte-buddy-agent", version.ref = "byteBuddy" }
+
+# Kotlin testing
 kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
 kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }
 kotest-extensions-spring = { group = "io.kotest.extensions", name = "kotest-extensions-spring", version.ref = "kotestExtensionsSpring" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
-byte-buddy-agent = { group = "net.bytebuddy", name = "byte-buddy-agent", version.ref = "byteBuddy" }
+kotlin-test-junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit5" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test" }
