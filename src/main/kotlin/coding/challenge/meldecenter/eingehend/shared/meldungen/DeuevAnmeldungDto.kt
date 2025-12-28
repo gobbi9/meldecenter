@@ -4,18 +4,18 @@ import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.sozialversicherung.BeschaeftigungDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
-import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuvAnmeldundKontaktDto
+import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldundKontaktDto
 import java.util.UUID
 
 /**
  * Datenübertragungsobjekt für eine DEÜV-Anmeldung.
- * Beispiel: DeuvAnmeldungDto(meldung = MeldungDto(...), ...)
+ * Beispiel: DeuevAnmeldungDto(meldung = MeldungDto(...), ...)
  */
-data class DeuvAnmeldungDto(
+data class DeuevAnmeldungDto(
     val meldecenterId: UUID? = null,
     val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
-    val mitarbeiter: MitarbeiterDto<DeuvAnmeldundKontaktDto>,
+    val mitarbeiter: MitarbeiterDto<DeuevAnmeldundKontaktDto>,
     val beschaeftigung: BeschaeftigungDto
 ) : Meldung
 

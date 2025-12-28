@@ -1,6 +1,6 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
-import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
+import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation
@@ -21,13 +21,13 @@ private val log = KotlinLogging.logger {}
 @RestController
 @RequestMapping("/v1/sozialversicherung/deuev-anmeldung")
 @Tag(name = "DEÜV-Anmeldung", description = "Endpunkte für DEÜV-Anmeldungen")
-class DeuvAnmeldungController(
-    private val deuvAnmeldungService: DeuvAnmeldungService,
+class DeuevAnmeldungController(
+    private val deuevAnmeldungService: DeuevAnmeldungService,
 ) {
 
     /**
      * Empfängt und speichert eine DEÜV-Anmeldung.
-     * @param deuvAnmeldungDto Die Anmeldung im JSON-Format.
+     * @param deuevAnmeldungDto Die Anmeldung im JSON-Format.
      * @return Die gespeicherte Anmeldung.
      */
     @PostMapping
@@ -38,11 +38,11 @@ class DeuvAnmeldungController(
     )
     @NewSpan
     suspend fun postDeuevAnmeldung(
-        @RequestBody deuvAnmeldungDto: DeuvAnmeldungDto,
-    ): DeuvAnmeldungDto {
+        @RequestBody deuevAnmeldungDto: DeuevAnmeldungDto,
+    ): DeuevAnmeldungDto {
         log.debug { "POST /v1/sozialversicherung/deuev-anmeldung aufgerufen" }
-        log.trace { "Request Body: $deuvAnmeldungDto" }
+        log.trace { "Request Body: $deuevAnmeldungDto" }
 
-        return deuvAnmeldungService.save(deuvAnmeldungDto)
+        return deuevAnmeldungService.save(deuevAnmeldungDto)
     }
 }

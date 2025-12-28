@@ -5,13 +5,13 @@ import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
 import coding.challenge.meldecenter.eingehend.shared.TelefonDto
-import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
+import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 
 /**
- * Mapping [DeuvAnmeldungDto] zu [DeuevAnmeldungEntity].
+ * Mapping [DeuevAnmeldungDto] zu [DeuevAnmeldungEntity].
  */
-fun DeuvAnmeldungDto.toEntity(): DeuevAnmeldungEntity {
-    return DeuevAnmeldungEntity(
+fun DeuevAnmeldungDto.toEntity(): DeuevAnmeldungEntity =
+    DeuevAnmeldungEntity(
         meldungId = meldung.id,
         meldungTyp = meldung.typ,
         meldungQuelle = meldung.quelle,
@@ -33,13 +33,12 @@ fun DeuvAnmeldungDto.toEntity(): DeuevAnmeldungEntity {
         beschaeftigungBeginn = beschaeftigung.beginn,
         beschaeftigungBeschaeftigungsart = beschaeftigung.beschaeftigungsart
     )
-}
 
 /**
- * Mapping [DeuevAnmeldungEntity] zu [DeuvAnmeldungDto].
+ * Mapping [DeuevAnmeldungEntity] zu [DeuevAnmeldungDto].
  */
-fun DeuevAnmeldungEntity.toDto(): DeuvAnmeldungDto {
-    return DeuvAnmeldungDto(
+fun DeuevAnmeldungEntity.toDto(): DeuevAnmeldungDto =
+    DeuevAnmeldungDto(
         meldecenterId = meldecenterId,
         meldung = MeldungDto(
             id = meldungId,
@@ -62,7 +61,7 @@ fun DeuevAnmeldungEntity.toDto(): DeuvAnmeldungDto {
                 plz = mitarbeiterAnschriftPlz,
                 ort = mitarbeiterAnschriftOrt
             ),
-            kontakt = DeuvAnmeldundKontaktDto(
+            kontakt = DeuevAnmeldundKontaktDto(
                 email = mitarbeiterKontaktEmail,
                 telefon = TelefonDto(
                     praefix = mitarbeiterKontaktTelefonPraefix,
@@ -76,4 +75,3 @@ fun DeuevAnmeldungEntity.toDto(): DeuvAnmeldungDto {
             beschaeftigungsart = beschaeftigungBeschaeftigungsart
         )
     )
-}

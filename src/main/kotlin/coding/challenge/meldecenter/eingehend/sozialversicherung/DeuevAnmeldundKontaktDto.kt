@@ -4,9 +4,9 @@ import coding.challenge.meldecenter.eingehend.shared.TelefonDto
 
 /**
  * Kontaktinformationen des Mitarbeiters.
- * Beispiel: DeuvAnmeldundKontaktDto(email = "max.mustermann@beispiel.de", ...)
+ * Beispiel: DeuevAnmeldundKontaktDto(email = "max.mustermann@beispiel.de", ...)
  */
-data class DeuvAnmeldundKontaktDto(
+data class DeuevAnmeldundKontaktDto(
     val email: String,
     val telefon: TelefonDto,
 )

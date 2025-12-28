@@ -3,14 +3,13 @@ package coding.challenge.meldecenter
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.flow.toList
 import org.springframework.core.io.ClassPathResource
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @MeldecenterSpringBootTest
-class DeuvAnmeldungControllerIT(
+class DeuevAnmeldungControllerIT(
     private val webTestClient: WebTestClient,
     private val repository: DeuevAnmeldungRepository
 ) : StringSpec({
