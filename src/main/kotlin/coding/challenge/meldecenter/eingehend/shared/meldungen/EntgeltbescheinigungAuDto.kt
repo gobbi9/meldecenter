@@ -1,8 +1,9 @@
 package coding.challenge.meldecenter.eingehend.shared.meldungen
 
+import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltDto
+import coding.challenge.meldecenter.eingehend.krankenkasse.KrankheitDto
 import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
-import coding.challenge.meldecenter.eingehend.shared.EntgeltDto
-import coding.challenge.meldecenter.eingehend.shared.KrankheitDto
+import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
 import java.util.UUID
 
@@ -11,7 +12,7 @@ import java.util.UUID
  */
 data class EntgeltbescheinigungAuDto(
     val meldecenterId: UUID? = null,
-    override val meldung: MeldungDto,
+    val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
     val mitarbeiter: MitarbeiterDto,
     val krankheit: KrankheitDto,

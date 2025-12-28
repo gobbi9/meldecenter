@@ -1,4 +1,4 @@
-package coding.challenge.meldecenter.eingehend.shared
+package coding.challenge.meldecenter.eingehend.sozialversicherung
 
 import java.time.LocalDate
 

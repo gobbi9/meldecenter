@@ -2,12 +2,11 @@ package coding.challenge.meldecenter.eingehend.sozialversicherung
 
 import coding.challenge.meldecenter.eingehend.shared.AnschriftDto
 import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
-import coding.challenge.meldecenter.eingehend.shared.BeschaeftigungDto
-import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
 import coding.challenge.meldecenter.eingehend.shared.KontaktDto
-import coding.challenge.meldecenter.eingehend.shared.meldungen.MeldungDto
+import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
 import coding.challenge.meldecenter.eingehend.shared.TelefonDto
+import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
 
 /**
  * Mapping [DeuvAnmeldungDto] zu [DeuevAnmeldungEntity].
