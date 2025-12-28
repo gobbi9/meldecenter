@@ -1,5 +1,14 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
+import coding.challenge.meldecenter.eingehend.shared.AnschriftDto
+import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
+import coding.challenge.meldecenter.eingehend.shared.BeschaeftigungDto
+import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
+import coding.challenge.meldecenter.eingehend.shared.KontaktDto
+import coding.challenge.meldecenter.eingehend.shared.meldungen.MeldungDto
+import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
+import coding.challenge.meldecenter.eingehend.shared.TelefonDto
+
 /**
  * Mapping [DeuvAnmeldungDto] zu [DeuevAnmeldungEntity].
  */
@@ -20,9 +29,9 @@ fun DeuvAnmeldungDto.toEntity(): DeuevAnmeldungEntity {
         mitarbeiterAnschriftPlz = mitarbeiter.anschrift.plz,
         mitarbeiterAnschriftOrt = mitarbeiter.anschrift.ort,
         mitarbeiterKontaktEmail = mitarbeiter.kontakt.email,
-        mitarbeiterKontaktTelefonPraefix = mitarbeiter.kontakt.telefon.praefix,
-        mitarbeiterKontaktTelefonVorwahl = mitarbeiter.kontakt.telefon.vorwahl,
-        mitarbeiterKontaktTelefonNummer = mitarbeiter.kontakt.telefon.nummer,
+        mitarbeiterKontaktTelefonPraefix = mitarbeiter.kontakt.telefon?.praefix ?: "",
+        mitarbeiterKontaktTelefonVorwahl = mitarbeiter.kontakt.telefon?.vorwahl ?: "",
+        mitarbeiterKontaktTelefonNummer = mitarbeiter.kontakt.telefon?.nummer ?: "",
         beschaeftigungBeginn = beschaeftigung.beginn,
         beschaeftigungBeschaeftigungsart = beschaeftigung.beschaeftigungsart
     )

@@ -1,5 +1,6 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
+import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuvAnmeldungDto
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation
