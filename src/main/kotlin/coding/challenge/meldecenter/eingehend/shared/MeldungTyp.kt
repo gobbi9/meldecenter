@@ -7,4 +7,9 @@ enum class MeldungTyp {
 
     /** DEÜV-Anmeldung */
     DEUEV_ANMELDUNG,
+
+    /**
+     * Generische Meldung
+     */
+    MELDUNG,
 }

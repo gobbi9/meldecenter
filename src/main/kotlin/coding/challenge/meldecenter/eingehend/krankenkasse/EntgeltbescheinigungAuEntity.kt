@@ -65,6 +65,8 @@ data class EntgeltbescheinigungAuEntity(
     var auditUpdatedAt: Instant? = null,
     /** Letzter Bearbeiter des Datensatzes. */
     var auditUpdatedBy: String? = null,
+    /** ID des zugehörigen Exports. */
+    val exportId: Long? = null,
     /** Versionsnummer für optimistisches Locking. */
     @Version val version: Long? = null,
 )

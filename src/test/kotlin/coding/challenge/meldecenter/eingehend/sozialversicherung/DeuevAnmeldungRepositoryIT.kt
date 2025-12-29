@@ -19,6 +19,10 @@ class DeuevAnmeldungRepositoryIT(
     "Should read test migration data" {
         val anmeldungen = repository.findAll().toList()
         anmeldungen.size shouldBeGreaterThanOrEqual 2
+
+        val firstAnmeldung = anmeldungen.find { it.meldecenterId == UUID.fromString("00000000-0000-0000-0000-000000000001") }
+        firstAnmeldung.shouldNotBeNull()
+        firstAnmeldung.exportId shouldBe 1L
     }
 
     "Should save new entity" {

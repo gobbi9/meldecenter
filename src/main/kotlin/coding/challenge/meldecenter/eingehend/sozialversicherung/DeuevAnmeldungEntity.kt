@@ -63,6 +63,8 @@ data class DeuevAnmeldungEntity(
     var auditUpdatedAt: Instant? = null,
     /** Letzter Bearbeiter des Datensatzes. Beispiel: "admin" */
     var auditUpdatedBy: String? = null,
+    /** ID des zugehörigen Exports. */
+    val exportId: Long? = null,
     /** Versionsnummer für optimistisches Locking.
      * Spring braucht das, um bei .save zwischen
      * einem INSERT und UPDATE zu unterscheiden, da PK ist eine UUID und wird
