@@ -4,6 +4,7 @@ import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.EntgeltbescheinigungAuDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.Meldung
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungController
+import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuController
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation
@@ -28,6 +29,7 @@ private val log = KotlinLogging.logger {}
 )
 class MeldungGatewayController(
     private val deuevAnmeldungController: DeuevAnmeldungController,
+    private val entgeltbescheinigungAuController: EntgeltbescheinigungAuController,
 ) {
 
     /**
@@ -50,7 +52,7 @@ class MeldungGatewayController(
             is DeuevAnmeldungDto ->
                 deuevAnmeldungController.save(meldung)
             is EntgeltbescheinigungAuDto ->
-                throw NotImplementedError("EntgeltbescheinigungAuDto noch nicht implementiert")
+                entgeltbescheinigungAuController.save(meldung)
         }
     }
 }
