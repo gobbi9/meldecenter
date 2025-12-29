@@ -7,5 +7,5 @@ import java.math.BigDecimal
  */
 data class EntgeltDto(
     val bezugszeitraum: String,
-    val bruttoentgelt: BigDecimal
+    val bruttoentgelt: BigDecimal,
 )

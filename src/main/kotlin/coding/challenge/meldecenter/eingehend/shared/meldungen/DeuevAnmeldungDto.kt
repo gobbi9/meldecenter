@@ -16,6 +16,6 @@ data class DeuevAnmeldungDto(
     val meldung: MeldungDto,
     val arbeitgeber: ArbeitgeberDto,
     val mitarbeiter: MitarbeiterDto<DeuevAnmeldungKontaktDto>,
-    val beschaeftigung: BeschaeftigungDto
+    val beschaeftigung: BeschaeftigungDto,
 ) : Meldung
 

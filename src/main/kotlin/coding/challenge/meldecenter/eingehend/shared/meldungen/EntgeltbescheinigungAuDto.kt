@@ -17,5 +17,5 @@ data class EntgeltbescheinigungAuDto(
     val arbeitgeber: ArbeitgeberDto,
     val mitarbeiter: MitarbeiterDto<EntgeltbescheinigungAuKontaktDto>,
     val krankheit: KrankheitDto,
-    val entgelt: EntgeltDto
+    val entgelt: EntgeltDto,
 ) : Meldung

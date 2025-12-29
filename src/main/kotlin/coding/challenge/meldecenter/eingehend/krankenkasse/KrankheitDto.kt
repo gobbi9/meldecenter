@@ -7,5 +7,5 @@ import java.time.LocalDate
  */
 data class KrankheitDto(
     val arbeitsunfaehigkeitBeginn: LocalDate,
-    val arbeitsunfaehigkeitEnde: LocalDate
+    val arbeitsunfaehigkeitEnde: LocalDate,
 )
