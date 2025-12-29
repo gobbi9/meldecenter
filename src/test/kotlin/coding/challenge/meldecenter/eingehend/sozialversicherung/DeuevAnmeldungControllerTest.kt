@@ -24,7 +24,7 @@ class DeuevAnmeldungControllerTest : StringSpec({
 
         coEvery { deuevAnmeldungService.save(deuevAnmeldungDto) } returns deuevAnmeldungDto
 
-        val result = deuevAnmeldungController.postDeuevAnmeldung(deuevAnmeldungDto)
+        val result = deuevAnmeldungController.save(deuevAnmeldungDto)
 
         result shouldBe deuevAnmeldungDto
 
@@ -41,7 +41,7 @@ class DeuevAnmeldungControllerTest : StringSpec({
 
         every { deuevAnmeldungService.findAll(pageable) } returns flowOf(deuevAnmeldungDto)
 
-        val result = deuevAnmeldungController.getDeuevAnmeldungen(pageable).toList()
+        val result = deuevAnmeldungController.getPage(pageable).toList()
 
         result.size shouldBe 1
         result.first() shouldBe deuevAnmeldungDto

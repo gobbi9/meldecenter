@@ -42,7 +42,7 @@ class DeuevAnmeldungController(
         description = "Empfängt eine DEÜV-Anmeldung und speichert diese."
     )
     @NewSpan
-    suspend fun postDeuevAnmeldung(
+    suspend fun save(
         @RequestBody deuevAnmeldungDto: DeuevAnmeldungDto,
     ): DeuevAnmeldungDto {
         log.debug { "POST /v1/sozialversicherung/deuev-anmeldung aufgerufen" }
@@ -64,7 +64,7 @@ class DeuevAnmeldungController(
         description = "Liest alle DEÜV-Anmeldungen paginiert aus."
     )
     @NewSpan
-    fun getDeuevAnmeldungen(
+    fun getPage(
         @PageableDefault(
             size = 10,
             sort = ["meldecenterId"],

@@ -42,13 +42,13 @@ class MeldungGatewayController(
         description = "Leitet eine Meldung weiter."
     )
     @NewSpan
-    suspend fun saveMeldung(@RequestBody meldung: Meldung): Meldung {
+    suspend fun save(@RequestBody meldung: Meldung): Meldung {
         log.debug { "POST /v1/meldung aufgerufen" }
         log.trace { "Request Body: $meldung" }
 
         return when (meldung) {
             is DeuevAnmeldungDto ->
-                deuevAnmeldungController.postDeuevAnmeldung(meldung)
+                deuevAnmeldungController.save(meldung)
             is EntgeltbescheinigungAuDto ->
                 throw NotImplementedError("EntgeltbescheinigungAuDto noch nicht implementiert")
         }
