@@ -2,6 +2,7 @@ package coding.challenge.meldecenter.eingehend.krankenkasse
 
 import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -14,6 +15,7 @@ import java.util.UUID
 class EntgeltbescheinigungAuRepositoryIT(
     private val repository: EntgeltbescheinigungAuRepository,
 ) : StringSpec({
+    extensions(SpringExtension)
 
     "Should read test migration data" {
         val bescheinigungen = repository.findAll().toList()
