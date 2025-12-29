@@ -38,8 +38,8 @@ services:
       - 'MIN_PORT=21000'
       - 'MAX_PORT=21000'
     ports:
-      - '21:21'
-      - '21000:21000'
+      - '2121:21'
+      - '21001:21000'
     volumes:
       - './src/test/resources/ausgehend/ftp:/ftp/admin'
 volumes:
