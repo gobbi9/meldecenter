@@ -61,7 +61,7 @@ fun DeuevAnmeldungEntity.toDto(): DeuevAnmeldungDto =
                 plz = mitarbeiterAnschriftPlz,
                 ort = mitarbeiterAnschriftOrt
             ),
-            kontakt = DeuevAnmeldundKontaktDto(
+            kontakt = DeuevAnmeldungKontaktDto(
                 email = mitarbeiterKontaktEmail,
                 telefon = TelefonDto(
                     praefix = mitarbeiterKontaktTelefonPraefix,

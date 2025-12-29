@@ -47,7 +47,7 @@ class DeuevAnmeldungMapperTest : StringSpec({
                 plz = "12345",
                 ort = "Musterstadt"
             ),
-            kontakt = DeuevAnmeldundKontaktDto(
+            kontakt = DeuevAnmeldungKontaktDto(
                 email = "max@mustermann.de",
                 telefon = TelefonDto(
                     praefix = "+49",
