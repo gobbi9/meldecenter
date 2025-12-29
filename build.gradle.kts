@@ -62,6 +62,9 @@ dependencies {
     // MacOS DNS fix
     testRuntimeOnly("io.netty:netty-resolver-dns-native-macos:${libs.versions.netty.get()}:osx-aarch_64")
 
+    // FTP Client
+    implementation(libs.spring.integration.ftp)
+
     // Test Support
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.testcontainers.junit.jupiter)

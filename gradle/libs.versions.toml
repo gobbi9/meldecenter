@@ -56,6 +56,9 @@ micrometer-bom = { group = "io.micrometer", name = "micrometer-bom", version.ref
 opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp" }
 spring-boot-starter-aop = { group = "org.springframework.boot", name = "spring-boot-starter-aop" }
 
+# FTP Client
+spring-integration-ftp = { group = "org.springframework.integration", name = "spring-integration-ftp" }
+
 # Test Support
 spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
 testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter" }

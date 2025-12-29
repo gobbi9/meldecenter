@@ -9,6 +9,7 @@ services:
       - DB_URL=r2dbc:postgresql://postgres:5432/meldecenter
       - FLYWAY_JDBC_URL=jdbc:postgresql://postgres:5432/meldecenter
       - TRACING_ENDPOINT=http://jaeger:4318/v1/traces
+      - FTP_HOST=ftp
   postgres:
     image: 'postgres:17.7-alpine'
     environment:
@@ -30,6 +31,17 @@ services:
     volumes:
       - 'jaeger-data:/go/bin/data'
       - 'jaeger-tmp:/tmp'
+  ftp:
+    image: 'delfer/alpine-ftp-server:latest'
+    environment:
+      - 'USERS=admin|admin'
+      - 'MIN_PORT=21000'
+      - 'MAX_PORT=21000'
+    ports:
+      - '21:21'
+      - '21000:21000'
+    volumes:
+      - './src/test/resources/ausgehend/ftp:/ftp/admin'
 volumes:
   postgres-data:
   jaeger-data:
