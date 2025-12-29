@@ -1,0 +1,34 @@
+<Rueckmeldung>
+  <Kopf>
+    <Empfangszeitpunkt>2025-03-10T11:06:30Z</Empfangszeitpunkt>
+    <Empfaenger>KRANKENKASSE</Empfaenger>
+  </Kopf>
+
+  <Ergebnisse>
+
+    <Ergebnis>
+      <Referenz>
+        <RequestId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4609</RequestId>
+        <MitarbeiterId>EMP-4452</MitarbeiterId>
+      </Referenz>
+      <Status>ANGENOMMEN</Status>
+    </Ergebnis>
+
+    <Ergebnis>
+      <Referenz>
+        <RequestId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4610</RequestId>
+        <MitarbeiterId>EMP-4453</MitarbeiterId>
+      </Referenz>
+      <Status>ABGELEHNT</Status>
+      <Fehler>
+        <Code>KG-204</Code>
+        <Kategorie>FACHLICH</Kategorie>
+        <Beschreibung>
+          Bezugszeitraum liegt außerhalb des zulässigen Zeitraums.
+        </Beschreibung>
+        <FehlerhaftesFeld>Bezugszeitraum</FehlerhaftesFeld>
+      </Fehler>
+    </Ergebnis>
+
+  </Ergebnisse>
+</Rueckmeldung>

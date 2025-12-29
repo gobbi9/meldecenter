@@ -15,7 +15,7 @@ class EntgeltbescheinigungAuControllerIT(
 ) : StringSpec({
 
     "POST /v1/krankenkasse/entgeltbescheinigung-au should save a new registration" {
-        val jsonResource = ClassPathResource("eingehend/Entgeltbescheinigung-Arbeitsunfähigkeit.json")
+        val jsonResource = ClassPathResource("eingehend/rest/Entgeltbescheinigung-Arbeitsunfähigkeit.json")
         val json = jsonResource.inputStream.bufferedReader().use { it.readText() }
 
         webTestClient.post()

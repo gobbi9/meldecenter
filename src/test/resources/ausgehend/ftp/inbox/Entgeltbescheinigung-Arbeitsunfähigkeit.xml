@@ -1,0 +1,45 @@
+<EntgeltbescheinigungenArbeitsunfaehigkeit>
+  <Absender>
+    <Betriebsnummer>12345678</Betriebsnummer>
+    <Quelle>EAP_DATEV</Quelle>
+    <Erstellungszeitpunkt>2025-03-10T11:05:00Z</Erstellungszeitpunkt>
+  </Absender>
+
+  <Bescheinigungen>
+    <Bescheinigung>
+      <ReferenzId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4609</ReferenzId>
+      <MitarbeiterId>EMP-4452</MitarbeiterId>
+
+      <Person>
+        <Vorname>Anna</Vorname>
+        <Nachname>Schmidt</Nachname>
+        <Geburtsdatum>1985-09-03</Geburtsdatum>
+        <Sozialversicherungsnummer>12030985S456</Sozialversicherungsnummer>
+
+        <Kontakt>
+          <Telefon>
+            <Praefix>+49</Praefix>
+            <Vorwahl>89</Vorwahl>
+            <Nummer>987654</Nummer>
+          </Telefon>
+        </Kontakt>
+      </Person>
+
+      <Arbeitsunfaehigkeit>
+        <Beginn>2025-03-01</Beginn>
+        <Ende>2025-03-20</Ende>
+      </Arbeitsunfaehigkeit>
+
+      <Entgelt>
+        <Bezugszeitraum>2024-12</Bezugszeitraum>
+        <Bruttoentgelt>3200.00</Bruttoentgelt>
+      </Entgelt>
+    </Bescheinigung>
+
+    <Bescheinigung>
+      <ReferenzId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4610</ReferenzId>
+      <MitarbeiterId>EMP-4453</MitarbeiterId>
+      <!-- weiterer Krankheitsfall -->
+    </Bescheinigung>
+  </Bescheinigungen>
+</EntgeltbescheinigungenArbeitsunfaehigkeit>

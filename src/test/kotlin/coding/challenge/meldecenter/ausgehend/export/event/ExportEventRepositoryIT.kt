@@ -1,6 +1,5 @@
 package coding.challenge.meldecenter.ausgehend.export.event
 
-import coding.challenge.meldecenter.ausgehend.export.ExportEventType
 import coding.challenge.meldecenter.ausgehend.export.ExportRepository
 import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 import io.kotest.core.spec.style.StringSpec

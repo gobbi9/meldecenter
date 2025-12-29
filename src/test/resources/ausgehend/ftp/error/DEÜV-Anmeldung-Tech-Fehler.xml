@@ -1,0 +1,15 @@
+<Rueckmeldung>
+  <Kopf>
+    <Empfangszeitpunkt>2025-02-01T08:31:00Z</Empfangszeitpunkt>
+    <Empfaenger>SOZIALVERSICHERUNG</Empfaenger>
+  </Kopf>
+
+  <Status>TECHNISCHER_FEHLER</Status>
+
+  <Fehler>
+    <Code>TECH-500</Code>
+    <Beschreibung>
+      Meldung konnte nicht verarbeitet werden (Schemafehler).
+    </Beschreibung>
+  </Fehler>
+</Rueckmeldung>

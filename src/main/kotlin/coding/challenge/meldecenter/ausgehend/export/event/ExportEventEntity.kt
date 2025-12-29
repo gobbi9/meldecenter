@@ -1,6 +1,5 @@
 package coding.challenge.meldecenter.ausgehend.export.event
 
-import coding.challenge.meldecenter.ausgehend.export.ExportEventType
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table

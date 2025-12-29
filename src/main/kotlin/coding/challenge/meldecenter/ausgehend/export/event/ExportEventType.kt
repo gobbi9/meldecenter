@@ -1,4 +1,4 @@
-package coding.challenge.meldecenter.ausgehend.export
+package coding.challenge.meldecenter.ausgehend.export.event
 
 /**
  * Typ eines Export-Events.

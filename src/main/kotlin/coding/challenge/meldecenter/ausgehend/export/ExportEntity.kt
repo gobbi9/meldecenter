@@ -18,7 +18,7 @@ data class ExportEntity(
     val typ: MeldungTyp,
 
     /** Der Status des Exports. */
-    val status: ExportStatus,
+    var status: ExportStatus,
 
     /** Der Zeitpunkt der Erstellung. */
     val createdAt: Instant = Instant.now(),

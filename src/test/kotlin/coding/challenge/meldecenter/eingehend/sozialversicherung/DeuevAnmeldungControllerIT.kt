@@ -16,7 +16,7 @@ class DeuevAnmeldungControllerIT(
 ) : StringSpec({
 
     "POST /v1/sozialversicherung/deuev-anmeldung should save a new registration" {
-        val jsonResource = ClassPathResource("eingehend/DEÜV-Anmeldung.json")
+        val jsonResource = ClassPathResource("eingehend/rest/DEÜV-Anmeldung.json")
         val json = jsonResource.inputStream.bufferedReader().use { it.readText() }
 
         webTestClient.post()

@@ -1,0 +1,44 @@
+<Rueckmeldung>
+  <Kopf>
+    <Empfangszeitpunkt>2025-02-01T08:32:05Z</Empfangszeitpunkt>
+    <Empfaenger>SOZIALVERSICHERUNG</Empfaenger>
+    <Verfahren>DEUEV</Verfahren>
+  </Kopf>
+
+  <Ergebnisse>
+
+    <!-- Mitarbeiter 1: Anmeldung erfolgreich -->
+    <Ergebnis>
+      <Referenz>
+        <RequestId>dd01fff5-778a-44ea-a87f-8ca58cad4b79</RequestId>
+        <MitarbeiterId>EMP-9981</MitarbeiterId>
+      </Referenz>
+
+      <Status>ANGENOMMEN</Status>
+
+      <Hinweis>
+        Anmeldung zur Sozialversicherung wurde erfolgreich verarbeitet.
+      </Hinweis>
+    </Ergebnis>
+
+    <!-- Mitarbeiter 2: Fachlicher Fehler -->
+    <Ergebnis>
+      <Referenz>
+        <RequestId>dd01fff5-778a-44ea-a87f-8ca58cad4b79</RequestId>
+        <MitarbeiterId>EMP-9982</MitarbeiterId>
+      </Referenz>
+
+      <Status>ABGELEHNT</Status>
+
+      <Fehler>
+        <Code>DEUEV-103</Code>
+        <Kategorie>FACHLICH</Kategorie>
+        <Beschreibung>
+          Anmeldedatum liegt vor dem Beginn des Beschäftigungsverhältnisses.
+        </Beschreibung>
+        <FehlerhaftesFeld>Beschaeftigung.Beginn</FehlerhaftesFeld>
+      </Fehler>
+    </Ergebnis>
+
+  </Ergebnisse>
+</Rueckmeldung>

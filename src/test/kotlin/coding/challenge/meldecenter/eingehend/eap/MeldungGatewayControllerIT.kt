@@ -19,7 +19,7 @@ class MeldungGatewayControllerIT(
 ) : StringSpec({
 
     "POST /v1/meldung should save a new DEÜV Meldung" {
-        val jsonResource = ClassPathResource("eingehend/DEÜV-Anmeldung.json")
+        val jsonResource = ClassPathResource("eingehend/rest/DEÜV-Anmeldung.json")
         val json =
             jsonResource.inputStream.bufferedReader().use { it.readText() }
 
@@ -41,7 +41,7 @@ class MeldungGatewayControllerIT(
 
     "POST /v1/meldung should save a new Entgeltbescheinigung Arbeitsunfähigkeit Meldung" {
         val jsonResource =
-            ClassPathResource("eingehend/Entgeltbescheinigung-Arbeitsunfähigkeit.json")
+            ClassPathResource("eingehend/rest/Entgeltbescheinigung-Arbeitsunfähigkeit.json")
         val json =
             jsonResource.inputStream.bufferedReader().use { it.readText() }
 
