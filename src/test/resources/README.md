@@ -1,3 +1,5 @@
+[<- Zurück zum Haupt-README](../../../README.md)
+
 # Mapping JSON -> XML
 
 This table describes the mapping between the incoming JSON files and their corresponding XML representations in the FTP folders.
