@@ -21,7 +21,7 @@ class SozialversicherungXmlMappingTest : StringSpec({
         val context = JAXBContext.newInstance(DeuevAnmeldungenDto::class.java)
         val unmarshaller = context.createUnmarshaller()
         val dto =
-            unmarshaller.unmarshal(StringReader(xmlContent!!)) as DeuevAnmeldungenDto
+            unmarshaller.unmarshal(StringReader(xmlContent)) as DeuevAnmeldungenDto
 
         dto.absender.betriebsnummer shouldBe "12345678"
         dto.anmeldungen.size shouldBe 2
@@ -40,7 +40,7 @@ class SozialversicherungXmlMappingTest : StringSpec({
         val context = JAXBContext.newInstance(OutboxRueckmeldungDto::class.java)
         val unmarshaller = context.createUnmarshaller()
         val dto =
-            unmarshaller.unmarshal(StringReader(xmlContent!!)) as OutboxRueckmeldungDto
+            unmarshaller.unmarshal(StringReader(xmlContent)) as OutboxRueckmeldungDto
 
         dto.kopf.empfaenger shouldBe "SOZIALVERSICHERUNG"
         dto.kopf.verfahren shouldBe "DEUEV"
@@ -60,7 +60,7 @@ class SozialversicherungXmlMappingTest : StringSpec({
         val context = JAXBContext.newInstance(ErrorRueckmeldungDto::class.java)
         val unmarshaller = context.createUnmarshaller()
         val dto =
-            unmarshaller.unmarshal(StringReader(xmlContent!!)) as ErrorRueckmeldungDto
+            unmarshaller.unmarshal(StringReader(xmlContent)) as ErrorRueckmeldungDto
 
         dto.kopf.empfaenger shouldBe "SOZIALVERSICHERUNG"
         dto.status shouldBe "TECHNISCHER_FEHLER"

@@ -22,7 +22,7 @@ class KrankenkasseXmlMappingTest : StringSpec({
             JAXBContext.newInstance(EntgeltbescheinigungenAuDto::class.java)
         val unmarshaller = context.createUnmarshaller()
         val dto =
-            unmarshaller.unmarshal(StringReader(xmlContent!!)) as EntgeltbescheinigungenAuDto
+            unmarshaller.unmarshal(StringReader(xmlContent)) as EntgeltbescheinigungenAuDto
 
         dto.absender.betriebsnummer shouldBe "12345678"
         dto.bescheinigungen.size shouldBe 3
@@ -36,12 +36,12 @@ class KrankenkasseXmlMappingTest : StringSpec({
             javaClass
                 .getResource("/ausgehend/ftp/outbox/KG_RUECK_12345678_20250310_01.xml")
                 ?.readText()
-        xmlContent shouldNotBe null
+        xmlContent.shouldNotBeNull()
 
         val context = JAXBContext.newInstance(RueckmeldungDto::class.java)
         val unmarshaller = context.createUnmarshaller()
         val dto =
-            unmarshaller.unmarshal(StringReader(xmlContent!!)) as RueckmeldungDto
+            unmarshaller.unmarshal(StringReader(xmlContent)) as RueckmeldungDto
 
         dto.kopf.empfaenger shouldBe "KRANKENKASSE"
         dto.ergebnisse.size shouldBe 3
