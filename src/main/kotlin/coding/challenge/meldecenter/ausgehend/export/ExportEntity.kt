@@ -20,6 +20,12 @@ data class ExportEntity(
     /** Der Status des Exports. */
     var status: ExportStatus,
 
+    /** Die Betriebsnummer des Arbeitgebers. */
+    val betriebsNummer: String,
+
+    /** Die Trace ID des Exports. */
+    val traceId: String,
+
     /** Der Zeitpunkt der Erstellung. */
     val createdAt: Instant = Instant.now(),
 
