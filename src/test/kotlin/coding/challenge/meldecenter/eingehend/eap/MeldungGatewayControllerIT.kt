@@ -18,7 +18,7 @@ class MeldungGatewayControllerIT(
     private val entgeltbescheinigungAuRepository: EntgeltbescheinigungAuRepository,
 ) : StringSpec({
 
-    "POST /v1/meldung should save a new DEÜV Meldung" {
+    "POST /v1/meldung should save a new DEUEV notification" {
         val jsonResource = ClassPathResource("eingehend/rest/DEÜV-Anmeldung.json")
         val json =
             jsonResource.inputStream.bufferedReader().use { it.readText() }
@@ -39,7 +39,7 @@ class MeldungGatewayControllerIT(
         saved.any { it.meldungId.toString() == "dd01fff5-778a-44ea-a87f-8ca58cad4b79" } shouldBe true
     }
 
-    "POST /v1/meldung should save a new Entgeltbescheinigung Arbeitsunfähigkeit Meldung" {
+    "POST /v1/meldung should save a new incapacity to work certificate notification" {
         val jsonResource =
             ClassPathResource("eingehend/rest/Entgeltbescheinigung-Arbeitsunfähigkeit.json")
         val json =

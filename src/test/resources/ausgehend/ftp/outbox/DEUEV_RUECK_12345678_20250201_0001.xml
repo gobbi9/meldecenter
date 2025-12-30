@@ -7,7 +7,7 @@
 
   <Ergebnisse>
 
-    <!-- Mitarbeiter 1: Anmeldung erfolgreich -->
+    <!-- Mitarbeiter 1: Anmeldung erfolgreich (from DEÜV-Anmeldung.json) -->
     <Ergebnis>
       <Referenz>
         <RequestId>dd01fff5-778a-44ea-a87f-8ca58cad4b79</RequestId>
@@ -21,11 +21,11 @@
       </Hinweis>
     </Ergebnis>
 
-    <!-- Mitarbeiter 2: Fachlicher Fehler -->
+    <!-- Mitarbeiter 2: Fachlicher Fehler (from DEÜV-Anmeldung-2.json) -->
     <Ergebnis>
       <Referenz>
-        <RequestId>dd01fff5-778a-44ea-a87f-8ca58cad4b79</RequestId>
-        <MitarbeiterId>EMP-9982</MitarbeiterId>
+        <RequestId>e1a2b3c4-d5e6-4f7g-8h9i-0j1k2l3m4n5o</RequestId>
+        <MitarbeiterId>EMP-9983</MitarbeiterId>
       </Referenz>
 
       <Status>ABGELEHNT</Status>

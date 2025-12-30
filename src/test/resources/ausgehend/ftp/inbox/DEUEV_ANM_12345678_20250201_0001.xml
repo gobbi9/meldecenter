@@ -6,6 +6,7 @@
   </Absender>
 
   <Anmeldungen>
+    <!-- From DEÜV-Anmeldung.json -->
     <Anmeldung>
       <ReferenzId>dd01fff5-778a-44ea-a87f-8ca58cad4b79</ReferenzId>
       <MitarbeiterId>EMP-9981</MitarbeiterId>
@@ -23,12 +24,8 @@
         </Anschrift>
 
         <Kontakt>
-          <Email>max.mustermann@example.de</Email>
-          <Telefon>
-            <Praefix>+49</Praefix>
-            <Vorwahl>30</Vorwahl>
-            <Nummer>1234567</Nummer>
-          </Telefon>
+          <Email>max.mustermann@bespiel.de</Email>
+          <Telefon>49-30-1234567</Telefon>
         </Kontakt>
       </Person>
 
@@ -38,10 +35,33 @@
       </Beschaeftigung>
     </Anmeldung>
 
+    <!-- From DEÜV-Anmeldung-2.json -->
     <Anmeldung>
-      <MitarbeiterId>EMP-9982</MitarbeiterId>
-      <ReferenzId>dd01fff5-778a-44ea-a87f-8ca58cad4b80</ReferenzId>
-      <!-- weiterer Mitarbeiter -->
+      <ReferenzId>e1a2b3c4-d5e6-4f7g-8h9i-0j1k2l3m4n5o</ReferenzId>
+      <MitarbeiterId>EMP-9983</MitarbeiterId>
+
+      <Person>
+        <Vorname>Erika</Vorname>
+        <Nachname>Mustermann</Nachname>
+        <Geburtsdatum>1992-05-20</Geburtsdatum>
+        <Sozialversicherungsnummer>12200592M123</Sozialversicherungsnummer>
+
+        <Anschrift>
+          <Strasse>Berliner Str. 1</Strasse>
+          <Postleitzahl>10117</Postleitzahl>
+          <Ort>Berlin</Ort>
+        </Anschrift>
+
+        <Kontakt>
+          <Email>erika.mustermann@example.de</Email>
+          <Telefon>49-30-7654321</Telefon>
+        </Kontakt>
+      </Person>
+
+      <Beschaeftigung>
+        <Beginn>2025-06-01</Beginn>
+        <Art>SOZIALVERSICHERUNGSPFLICHTIG</Art>
+      </Beschaeftigung>
     </Anmeldung>
   </Anmeldungen>
 </DEUEVAnmeldungen>

@@ -16,18 +16,18 @@
 
     <Ergebnis>
       <Referenz>
-        <RequestId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4610</RequestId>
-        <MitarbeiterId>EMP-4453</MitarbeiterId>
+        <RequestId>c9b96c98-2c6g-5h6e-bc03-d7d8070b5710</RequestId>
+        <MitarbeiterId>EMP-4454</MitarbeiterId>
       </Referenz>
-      <Status>ABGELEHNT</Status>
-      <Fehler>
-        <Code>KG-204</Code>
-        <Kategorie>FACHLICH</Kategorie>
-        <Beschreibung>
-          Bezugszeitraum liegt außerhalb des zulässigen Zeitraums.
-        </Beschreibung>
-        <FehlerhaftesFeld>Bezugszeitraum</FehlerhaftesFeld>
-      </Fehler>
+      <Status>ANGENOMMEN</Status>
+    </Ergebnis>
+
+    <Ergebnis>
+      <Referenz>
+        <RequestId>d0c07d09-3d7h-6i7f-cd04-e8e9181c6821</RequestId>
+        <MitarbeiterId>EMP-4455</MitarbeiterId>
+      </Referenz>
+      <Status>ANGENOMMEN</Status>
     </Ergebnis>
 
   </Ergebnisse>

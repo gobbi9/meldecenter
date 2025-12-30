@@ -5,6 +5,7 @@ description = "Coding Challenge mit Spring Boot 3 und PostgreSQL"
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.kotlin.noarg)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
 }
@@ -13,6 +14,11 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+noArg {
+    annotation("jakarta.xml.bind.annotation.XmlRootElement")
+    annotation("jakarta.xml.bind.annotation.XmlAccessorType")
 }
 
 repositories {
@@ -64,6 +70,10 @@ dependencies {
 
     // FTP Client
     implementation(libs.spring.integration.ftp)
+
+    // XML
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:4.0.2")
 
     // Test Support
     testImplementation(libs.spring.boot.starter.test)

@@ -1,0 +1,36 @@
+{
+  "meldung": {
+    "id": "e1a2b3c4-d5e6-4f7g-8h9i-0j1k2l3m4n5o",
+    "typ": "DEUEV_ANMELDUNG",
+    "quelle": "EAP_SAP_HCM",
+    "mandantId": "MANDANT_4712",
+    "erstelltAm": "2025-05-15T10:00:00Z"
+  },
+  "arbeitgeber": {
+    "betriebsnummer": "87654321"
+  },
+  "mitarbeiter": {
+    "id": "EMP-9983",
+    "vorname": "Erika",
+    "nachname": "Mustermann",
+    "geburtsdatum": "1992-05-20",
+    "sozialversicherungsnummer": "12 200592 M 123",
+    "anschrift": {
+      "strasse": "Berliner Str. 1",
+      "plz": "10117",
+      "ort": "Berlin"
+    },
+    "kontakt": {
+      "email": "erika.mustermann@example.de",
+      "telefon": {
+        "praefix": "+49",
+        "vorwahl": "30",
+        "nummer": "7654321"
+      }
+    }
+  },
+  "beschaeftigung": {
+    "beginn": "2025-06-01",
+    "beschaeftigungsart": "SOZIALVERSICHERUNGSPFLICHTIG"
+  }
+}

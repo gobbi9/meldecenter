@@ -1,11 +1,9 @@
 <Rueckmeldung>
   <Kopf>
-    <Empfangszeitpunkt>2025-02-01T08:31:00Z</Empfangszeitpunkt>
-    <Empfaenger>KRANKENKASSE</Empfaenger>
+    <Empfangszeitpunkt>2025-06-20T09:16:00Z</Empfangszeitpunkt>
+    <Empfaenger>SOZIALVERSICHERUNG</Empfaenger>
   </Kopf>
-
   <Status>TECHNISCHER_FEHLER</Status>
-
   <Fehler>
     <Code>TECH-500</Code>
     <Beschreibung>

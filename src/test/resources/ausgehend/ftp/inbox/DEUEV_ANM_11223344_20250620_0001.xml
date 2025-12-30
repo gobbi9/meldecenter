@@ -1,0 +1,37 @@
+<DEUEVAnmeldungen>
+  <Absender>
+    <Betriebsnummer>11223344</Betriebsnummer>
+    <Quelle>EAP_SAP_HCM</Quelle>
+    <Erstellungszeitpunkt>2025-06-20T09:15:00Z</Erstellungszeitpunkt>
+  </Absender>
+
+  <Anmeldungen>
+    <Anmeldung>
+      <ReferenzId>f2b3c4d5-e6f7-5g8h-9i0j-1k2l3m4n5o6p</ReferenzId>
+      <MitarbeiterId>EMP-9984</MitarbeiterId>
+
+      <Person>
+        <Vorname>John</Vorname>
+        <Nachname>Doe</Nachname>
+        <Geburtsdatum>1988-11-12</Geburtsdatum>
+        <Sozialversicherungsnummer>34121188D123</Sozialversicherungsnummer>
+
+        <Anschrift>
+          <Strasse>Elbchaussee 100</Strasse>
+          <Postleitzahl>22605</Postleitzahl>
+          <Ort>Hamburg</Ort>
+        </Anschrift>
+
+        <Kontakt>
+          <Email>john.doe@example.de</Email>
+          <Telefon>49-40-1112223</Telefon>
+        </Kontakt>
+      </Person>
+
+      <Beschaeftigung>
+        <Beginn>2025-07-01</Beginn>
+        <Art>SOZIALVERSICHERUNGSPFLICHTIG</Art>
+      </Beschaeftigung>
+    </Anmeldung>
+  </Anmeldungen>
+</DEUEVAnmeldungen>

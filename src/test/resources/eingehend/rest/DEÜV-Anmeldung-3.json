@@ -1,0 +1,36 @@
+{
+  "meldung": {
+    "id": "f2b3c4d5-e6f7-5g8h-9i0j-1k2l3m4n5o6p",
+    "typ": "DEUEV_ANMELDUNG",
+    "quelle": "EAP_SAP_HCM",
+    "mandantId": "MANDANT_4713",
+    "erstelltAm": "2025-06-20T09:15:00Z"
+  },
+  "arbeitgeber": {
+    "betriebsnummer": "11223344"
+  },
+  "mitarbeiter": {
+    "id": "EMP-9984",
+    "vorname": "John",
+    "nachname": "Doe",
+    "geburtsdatum": "1988-11-12",
+    "sozialversicherungsnummer": "34 121188 D 123",
+    "anschrift": {
+      "strasse": "Elbchaussee 100",
+      "plz": "22605",
+      "ort": "Hamburg"
+    },
+    "kontakt": {
+      "email": "john.doe@example.de",
+      "telefon": {
+        "praefix": "+49",
+        "vorwahl": "40",
+        "nummer": "1112223"
+      }
+    }
+  },
+  "beschaeftigung": {
+    "beginn": "2025-07-01",
+    "beschaeftigungsart": "SOZIALVERSICHERUNGSPFLICHTIG"
+  }
+}

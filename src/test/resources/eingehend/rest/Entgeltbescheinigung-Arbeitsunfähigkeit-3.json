@@ -1,0 +1,37 @@
+{
+  "meldung": {
+    "id": "d0c07d09-3d7h-6i7f-cd04-e8e9181c6821",
+    "typ": "ENTGELTBESCHEINIGUNG_KG",
+    "quelle": "EAP_DATEV",
+    "mandantId": "MANDANT_4713",
+    "erstelltAm": "2025-05-25T16:45:00Z"
+  },
+  "arbeitgeber": {
+    "betriebsnummer": "11223344"
+  },
+  "mitarbeiter": {
+    "id": "EMP-4455",
+    "vorname": "Sarah",
+    "nachname": "Wagner",
+    "geburtsdatum": "1995-07-22",
+    "sozialversicherungsnummer": "45 220795 W 012",
+    "anschrift": {
+      "strasse": "Hauptplatz 5",
+      "plz": "70173",
+      "ort": "Stuttgart"
+    },
+    "kontakt": {
+      "email": "sarah.wagner@example.de",
+      "telefonnummer": "+49 711 777888",
+      "bevorzugteKontaktsart": "EMAIL"
+    }
+  },
+  "krankheit": {
+    "arbeitsunfaehigkeitBeginn": "2025-05-10",
+    "arbeitsunfaehigkeitEnde": "2025-05-24"
+  },
+  "entgelt": {
+    "bezugszeitraum": "2025-04",
+    "bruttoentgelt": 3500.00
+  }
+}

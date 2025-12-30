@@ -1,0 +1,90 @@
+<EntgeltbescheinigungenArbeitsunfaehigkeit>
+  <Absender>
+    <Betriebsnummer>12345678</Betriebsnummer>
+    <Quelle>EAP_DATEV</Quelle>
+    <Erstellungszeitpunkt>2025-03-10T11:05:00Z</Erstellungszeitpunkt>
+  </Absender>
+
+  <Bescheinigungen>
+    <!-- From Entgeltbescheinigung-Arbeitsunfähigkeit.json -->
+    <Bescheinigung>
+      <ReferenzId>b8a85b87-1b5f-4f5d-abf2-c6c7969a4609</ReferenzId>
+      <MitarbeiterId>EMP-4452</MitarbeiterId>
+
+      <Person>
+        <Vorname>Anna</Vorname>
+        <Nachname>Schmidt</Nachname>
+        <Geburtsdatum>1985-09-03</Geburtsdatum>
+        <Sozialversicherungsnummer>12030985S456</Sozialversicherungsnummer>
+
+        <Kontakt>
+          <Telefon>49-89-987654</Telefon>
+        </Kontakt>
+      </Person>
+
+      <Arbeitsunfaehigkeit>
+        <Beginn>2025-03-01</Beginn>
+        <Ende>2025-03-20</Ende>
+      </Arbeitsunfaehigkeit>
+
+      <Entgelt>
+        <Bezugszeitraum>2024-12</Bezugszeitraum>
+        <Bruttoentgelt>3200.00</Bruttoentgelt>
+      </Entgelt>
+    </Bescheinigung>
+
+    <!-- From Entgeltbescheinigung-Arbeitsunfähigkeit-2.json -->
+    <Bescheinigung>
+      <ReferenzId>c9b96c98-2c6g-5h6e-bc03-d7d8070b5710</ReferenzId>
+      <MitarbeiterId>EMP-4454</MitarbeiterId>
+
+      <Person>
+        <Vorname>Markus</Vorname>
+        <Nachname>Meier</Nachname>
+        <Geburtsdatum>1978-01-15</Geburtsdatum>
+        <Sozialversicherungsnummer>23150178M789</Sozialversicherungsnummer>
+
+        <Kontakt>
+          <Telefon>49-221-555666</Telefon>
+        </Kontakt>
+      </Person>
+
+      <Arbeitsunfaehigkeit>
+        <Beginn>2025-04-01</Beginn>
+        <Ende>2025-04-10</Ende>
+      </Arbeitsunfaehigkeit>
+
+      <Entgelt>
+        <Bezugszeitraum>2025-03</Bezugszeitraum>
+        <Bruttoentgelt>2800.00</Bruttoentgelt>
+      </Entgelt>
+    </Bescheinigung>
+
+    <!-- From Entgeltbescheinigung-Arbeitsunfähigkeit-3.json -->
+    <Bescheinigung>
+      <ReferenzId>d0c07d09-3d7h-6i7f-cd04-e8e9181c6821</ReferenzId>
+      <MitarbeiterId>EMP-4455</MitarbeiterId>
+
+      <Person>
+        <Vorname>Sarah</Vorname>
+        <Nachname>Wagner</Nachname>
+        <Geburtsdatum>1995-07-22</Geburtsdatum>
+        <Sozialversicherungsnummer>45220795W012</Sozialversicherungsnummer>
+
+        <Kontakt>
+          <Telefon>49-711-777888</Telefon>
+        </Kontakt>
+      </Person>
+
+      <Arbeitsunfaehigkeit>
+        <Beginn>2025-05-10</Beginn>
+        <Ende>2025-05-24</Ende>
+      </Arbeitsunfaehigkeit>
+
+      <Entgelt>
+        <Bezugszeitraum>2025-04</Bezugszeitraum>
+        <Bruttoentgelt>3500.00</Bruttoentgelt>
+      </Entgelt>
+    </Bescheinigung>
+  </Bescheinigungen>
+</EntgeltbescheinigungenArbeitsunfaehigkeit>

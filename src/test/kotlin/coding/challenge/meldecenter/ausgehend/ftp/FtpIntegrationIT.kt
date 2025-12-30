@@ -10,9 +10,9 @@ class FtpIntegrationIT(
     private val ftpService: FtpService
 ) : StringSpec({
 
-    "should upload a xml file to the ftp server" {
-        val localFile = File("src/test/resources/ausgehend/ftp/outbox/DEUEV-Anmeldung.xml")
-        val remoteName = "DEUEV-Anmeldung-uploaded.xml"
+    "Should upload a xml file to the ftp server" {
+        val localFile = File("src/test/resources/ausgehend/ftp/outbox/DEUEV_RUECK_12345678_20250201_0001.xml")
+        val remoteName = "DEUEV_RUECK_12345678_20250201_0001-uploaded.xml"
 
         ftpService.uploadFile(localFile.absolutePath, remoteName)
 
@@ -24,9 +24,9 @@ class FtpIntegrationIT(
         }
     }
 
-    "should read a xml file from the ftp server" {
-        val localFile = File("src/test/resources/ausgehend/ftp/inbox/DEUEV-Anmeldung.xml")
-        val remoteName = "inbox/DEUEV-Anmeldung.xml"
+    "Should read a xml file from the ftp server" {
+        val localFile = File("src/test/resources/ausgehend/ftp/inbox/DEUEV_ANM_12345678_20250201_0001.xml")
+        val remoteName = "inbox/DEUEV_ANM_12345678_20250201_0001.xml"
 
         val content = ftpService.readFile(remoteName)
         content shouldBe localFile.readText()

@@ -1,0 +1,37 @@
+{
+  "meldung": {
+    "id": "c9b96c98-2c6g-5h6e-bc03-d7d8070b5710",
+    "typ": "ENTGELTBESCHEINIGUNG_KG",
+    "quelle": "EAP_DATEV",
+    "mandantId": "MANDANT_4712",
+    "erstelltAm": "2025-04-12T14:20:00Z"
+  },
+  "arbeitgeber": {
+    "betriebsnummer": "87654321"
+  },
+  "mitarbeiter": {
+    "id": "EMP-4454",
+    "vorname": "Markus",
+    "nachname": "Meier",
+    "geburtsdatum": "1978-01-15",
+    "sozialversicherungsnummer": "23 150178 M 789",
+    "anschrift": {
+      "strasse": "Gartenweg 12",
+      "plz": "50667",
+      "ort": "Köln"
+    },
+    "kontakt": {
+      "email": "markus.meier@example.de",
+      "telefonnummer": "+49 221 555666",
+      "bevorzugteKontaktsart": "TELEFON"
+    }
+  },
+  "krankheit": {
+    "arbeitsunfaehigkeitBeginn": "2025-04-01",
+    "arbeitsunfaehigkeitEnde": "2025-04-10"
+  },
+  "entgelt": {
+    "bezugszeitraum": "2025-03",
+    "bruttoentgelt": 2800.00
+  }
+}
