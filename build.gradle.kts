@@ -72,8 +72,8 @@ dependencies {
     implementation(libs.spring.integration.ftp)
 
     // XML
-    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
-    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:4.0.2")
+    implementation(libs.jakarta.xml.bind.api)
+    runtimeOnly(libs.jaxb.runtime)
 
     // Test Support
     testImplementation(libs.spring.boot.starter.test)
