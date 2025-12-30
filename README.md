@@ -44,14 +44,14 @@ Dies startet die Anwendung lokal über Gradle. Dank der Spring Boot Docker Compo
 ## Port-Belegung an localhost
 
 | Anwendung / Dienst | Port (Localhost) | Port (Container) | Protokoll / Zweck |
-| :--- | :--- | :--- | :--- |
-| **Meldecenter** | `8080` | `8080` | REST API |
-| **PostgreSQL** | `5432` | `5432` | Datenbank (R2DBC/JDBC) |
-| **FTP Server** | `2121` | `21` | FTP Control Port |
-| **FTP Server** | `21001` | `21000` | FTP Passive Data Port |
-| **Jaeger UI** | `16686` | `16686` | Web-Oberfläche (Tracing) |
-| **Jaeger OTLP** | `4317` | `4317` | Tracing via gRPC |
-| **Jaeger OTLP** | `4318` | `4318` | Tracing via HTTP |
+| :--- |:-----------------| :--- | :--- |
+| **Meldecenter** | `8080`           | `8080` | REST API |
+| **PostgreSQL** | `5432`           | `5432` | Datenbank (R2DBC/JDBC) |
+| **FTP Server** | `21`             | `21` | FTP Control Port |
+| **FTP Server** | `21000`          | `21000` | FTP Passive Data Port |
+| **Jaeger UI** | `16686`          | `16686` | Web-Oberfläche (Tracing) |
+| **Jaeger OTLP** | `4317`           | `4317` | Tracing via gRPC |
+| **Jaeger OTLP** | `4318`           | `4318` | Tracing via HTTP |
 
 
 ## Tests ausführen
@@ -62,7 +62,7 @@ Um die Unit- und Integrationstests auszuführen, verwenden Sie:
 ./gradlew test
 ```
 
-**Wichtig:** Damit die Tests lokal erfolgreich ausgeführt werden können, müssen die Ports **21** (FTP) und **21000** (FTP Passive Ports) auf Ihrem System frei sein, da Testcontainers diese für den integrierten FTP-Server benötigt.
+**Wichtig:** Um die Tests lokal erfolgreich auszuführen – auch wenn der FTP-Container bereits durch `./gradlew composeUp` oder `./gradlew bootRun` aktiv ist –, wird dieser von Testcontainers wiederverwendet statt neu gestartet. Dies ist eine Einschränkung des FTP-Images: Port 21000 muss verfügbar sein und kann nicht geändert werden.
 
 ## Weitere Dokumentation
 
