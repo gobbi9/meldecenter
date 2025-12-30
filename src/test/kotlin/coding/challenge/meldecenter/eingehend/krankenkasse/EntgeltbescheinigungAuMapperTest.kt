@@ -75,7 +75,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
         mitarbeiterId = "EMP-4452",
         mitarbeiterVorname = "Anna",
         mitarbeiterNachname = "Schmidt",
-        mitarbeiterGEBURTSDATUM = geburtsdatum,
+        mitarbeiterGeburtsdatum = geburtsdatum,
         mitarbeiterSozialversicherungsnummer = "12 030985 S 456",
         mitarbeiterAnschriftStrasse = "Marktweg 5",
         mitarbeiterAnschriftPlz = "80331",
@@ -102,7 +102,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
         result.mitarbeiterId shouldBe dto.mitarbeiter.id
         result.mitarbeiterVorname shouldBe dto.mitarbeiter.vorname
         result.mitarbeiterNachname shouldBe dto.mitarbeiter.nachname
-        result.mitarbeiterGEBURTSDATUM shouldBe dto.mitarbeiter.geburtsdatum
+        result.mitarbeiterGeburtsdatum shouldBe dto.mitarbeiter.geburtsdatum
         result.mitarbeiterSozialversicherungsnummer shouldBe dto.mitarbeiter.sozialversicherungsnummer
         result.mitarbeiterAnschriftStrasse shouldBe dto.mitarbeiter.anschrift.strasse
         result.mitarbeiterAnschriftPlz shouldBe dto.mitarbeiter.anschrift.plz
@@ -129,7 +129,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
         result.mitarbeiter.id shouldBe entity.mitarbeiterId
         result.mitarbeiter.vorname shouldBe entity.mitarbeiterVorname
         result.mitarbeiter.nachname shouldBe entity.mitarbeiterNachname
-        result.mitarbeiter.geburtsdatum shouldBe entity.mitarbeiterGEBURTSDATUM
+        result.mitarbeiter.geburtsdatum shouldBe entity.mitarbeiterGeburtsdatum
         result.mitarbeiter.sozialversicherungsnummer shouldBe entity.mitarbeiterSozialversicherungsnummer
         result.mitarbeiter.anschrift.strasse shouldBe entity.mitarbeiterAnschriftStrasse
         result.mitarbeiter.anschrift.plz shouldBe entity.mitarbeiterAnschriftPlz

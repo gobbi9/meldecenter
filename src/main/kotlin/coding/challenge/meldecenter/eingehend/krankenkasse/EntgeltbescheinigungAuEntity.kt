@@ -34,7 +34,7 @@ data class EntgeltbescheinigungAuEntity(
     /** Nachname des Mitarbeiters. */
     val mitarbeiterNachname: String,
     /** Geburtsdatum des Mitarbeiters. */
-    val mitarbeiterGEBURTSDATUM: LocalDate,
+    val mitarbeiterGeburtsdatum: LocalDate,
     /** Sozialversicherungsnummer des Mitarbeiters. */
     val mitarbeiterSozialversicherungsnummer: String,
     /** Straße der Anschrift. */

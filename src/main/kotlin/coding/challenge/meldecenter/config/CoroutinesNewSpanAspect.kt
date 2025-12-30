@@ -1,8 +1,8 @@
 package coding.challenge.meldecenter.config
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.micrometer.tracing.Tracer
 import io.micrometer.tracing.Span
+import io.micrometer.tracing.Tracer
 import io.micrometer.tracing.annotation.NewSpan
 import kotlinx.coroutines.ThreadContextElement
 import org.aspectj.lang.ProceedingJoinPoint
@@ -28,9 +28,12 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         val signature = pjp.signature as MethodSignature
         val method = signature.method
         val newSpanAnnotation = method.getAnnotation(NewSpan::class.java)
-        val spanName = newSpanAnnotation.name.ifEmpty { method.name }
+        val spanName = newSpanAnnotation.name.ifEmpty {
+            "${signature.declaringType.simpleName}.${method.name}"
+        }
 
-        val isSuspend = pjp.args.isNotEmpty() && pjp.args.last() is Continuation<*>
+        val isSuspend =
+            pjp.args.isNotEmpty() && pjp.args.last() is Continuation<*>
 
         if (isSuspend) {
             return handleSuspend(pjp, spanName)
@@ -49,7 +52,10 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         }
     }
 
-    private fun handleSuspend(pjp: ProceedingJoinPoint, spanName: String): Any? {
+    private fun handleSuspend(
+        pjp: ProceedingJoinPoint,
+        spanName: String,
+    ): Any? {
         val args = pjp.args
         val nextSpan = tracer.nextSpan().name(spanName).start()
 
@@ -59,8 +65,11 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         val wrappedContinuation = object : Continuation<Any?> {
             override val context: CoroutineContext
                 get() = continuation.context +
-                        MdcContextElement(nextSpan.context().traceId(), nextSpan.context().spanId()) +
-                        TracingContextElement(tracer, nextSpan)
+                    MdcContextElement(
+                        nextSpan.context().traceId(),
+                        nextSpan.context().spanId()
+                    ) +
+                    TracingContextElement(tracer, nextSpan)
 
             override fun resumeWith(result: Result<Any?>) {
                 try {
@@ -86,8 +95,14 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
                 }
                 result
             } finally {
-                if (oldTraceId != null) MDC.put("traceId", oldTraceId) else MDC.remove("traceId")
-                if (oldSpanId != null) MDC.put("spanId", oldSpanId) else MDC.remove("spanId")
+                if (oldTraceId != null) MDC.put(
+                    "traceId",
+                    oldTraceId
+                ) else MDC.remove("traceId")
+                if (oldSpanId != null) MDC.put(
+                    "spanId",
+                    oldSpanId
+                ) else MDC.remove("spanId")
             }
         } catch (e: Throwable) {
             nextSpan.error(e)
@@ -98,8 +113,12 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         }
     }
 
-    class MdcContextElement(private val traceId: String, private val spanId: String) : ThreadContextElement<Map<String, String>?> {
+    class MdcContextElement(
+        private val traceId: String,
+        private val spanId: String,
+    ) : ThreadContextElement<Map<String, String>?> {
         override val key: CoroutineContext.Key<*> get() = Key
+
         companion object Key : CoroutineContext.Key<MdcContextElement>
 
         override fun updateThreadContext(context: CoroutineContext): Map<String, String>? {
@@ -109,20 +128,30 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
             return oldState
         }
 
-        override fun restoreThreadContext(context: CoroutineContext, oldState: Map<String, String>?) {
+        override fun restoreThreadContext(
+            context: CoroutineContext,
+            oldState: Map<String, String>?,
+        ) {
             if (oldState != null) MDC.setContextMap(oldState) else MDC.clear()
         }
     }
 
-    class TracingContextElement(private val tracer: Tracer, private val span: Span) : ThreadContextElement<Tracer.SpanInScope> {
+    class TracingContextElement(
+        private val tracer: Tracer,
+        private val span: Span,
+    ) : ThreadContextElement<Tracer.SpanInScope> {
         override val key: CoroutineContext.Key<*> get() = Key
+
         companion object Key : CoroutineContext.Key<TracingContextElement>
 
         override fun updateThreadContext(context: CoroutineContext): Tracer.SpanInScope {
             return tracer.withSpan(span)
         }
 
-        override fun restoreThreadContext(context: CoroutineContext, oldState: Tracer.SpanInScope) {
+        override fun restoreThreadContext(
+            context: CoroutineContext,
+            oldState: Tracer.SpanInScope,
+        ) {
             oldState.close()
         }
     }

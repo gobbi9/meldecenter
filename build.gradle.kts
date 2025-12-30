@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.flyway.database.postgresql)
     runtimeOnly(libs.postgresql)
     runtimeOnly(libs.r2dbc.postgresql)
+    implementation(libs.r2dbc.proxy)
 
     // OpenAPI, Observability & Logging
     implementation(libs.springdoc.openapi)
