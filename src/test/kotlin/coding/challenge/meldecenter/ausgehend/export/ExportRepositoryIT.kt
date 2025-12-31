@@ -20,7 +20,6 @@ class ExportRepositoryIT(
         placeholder.typ shouldBe MeldungTyp.MELDUNG.toString()
         placeholder.status shouldBe ExportStatus.DUPLICATES
         placeholder.betriebsnummer shouldBe "00000000"
-        placeholder.traceId shouldBe "placeholder-trace-id"
     }
 
     "Should save and find ExportEntity" {
@@ -28,7 +27,6 @@ class ExportRepositoryIT(
             typ = MeldungTyp.DEUEV_ANMELDUNG.toString(),
             status = ExportStatus.CREATED,
             betriebsnummer = "B12345678",
-            traceId = "test-trace-id",
             createdBy = "test-user"
         )
         val savedExport = repository.save(export)

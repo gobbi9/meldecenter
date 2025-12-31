@@ -14,7 +14,6 @@ class ExportMapperTest : StringSpec({
             typ = "KG_ENTG",
             status = ExportStatus.CREATED,
             betriebsnummer = "12345678",
-            traceId = UUID.randomUUID().toString(),
             createdAt = createdAt
         )
 

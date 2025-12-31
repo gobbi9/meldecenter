@@ -23,9 +23,6 @@ data class ExportEntity(
     /** Die Betriebsnummer des Arbeitgebers. */
     val betriebsnummer: String,
 
-    /** Die Trace ID des Exports. */
-    val traceId: String,
-
     /** Der Zeitpunkt der Erstellung. */
     val createdAt: LocalDateTime = LocalDateTime.now(),
 

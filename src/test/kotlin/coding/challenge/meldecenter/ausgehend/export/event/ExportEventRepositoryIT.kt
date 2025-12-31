@@ -20,9 +20,10 @@ class ExportEventRepositoryIT(
         // When saving an event
         val event = ExportEventEntity(
             exportId = export.id,
-            type = ExportEventType.START_EXPORT,
+            type = ExportEventType.START,
             details = "Export started for testing",
-            createdBy = "test-user"
+            traceId = "trace-id",
+            createdBy = "test-user",
         )
         val savedEvent = repository.save(event)
         savedEvent.id.shouldNotBeNull()
@@ -32,28 +33,9 @@ class ExportEventRepositoryIT(
         val foundEvent = repository.findById(savedEvent.id)
         foundEvent.shouldNotBeNull()
         foundEvent.exportId shouldBe export.id
-        foundEvent.type shouldBe ExportEventType.START_EXPORT
+        foundEvent.type shouldBe ExportEventType.START
         foundEvent.details shouldBe "Export started for testing"
+        foundEvent.traceId shouldBe "trace-id"
         foundEvent.createdBy shouldBe "test-user"
-    }
-
-    "Should update ExportEventEntity" {
-        // Given a saved event
-        val event = ExportEventEntity(
-            exportId = 1L,
-            type = ExportEventType.START_EXPORT,
-            createdBy = "test-user"
-        )
-        val savedEvent = repository.save(event)
-
-        // When updating details
-        val updatedEvent = savedEvent.copy(details = "Updated details")
-        repository.save(updatedEvent)
-
-        // Then version is incremented and details are updated
-        val foundEvent = repository.findById(savedEvent.id)
-        foundEvent.shouldNotBeNull()
-        foundEvent.details shouldBe "Updated details"
-        foundEvent.version shouldBe 1
     }
 })

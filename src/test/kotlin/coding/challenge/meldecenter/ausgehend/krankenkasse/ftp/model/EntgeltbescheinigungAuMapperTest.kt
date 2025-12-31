@@ -41,7 +41,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
             mitarbeiterAnschriftPlz = "12345",
             mitarbeiterAnschriftOrt = "Berlin",
             mitarbeiterKontaktEmail = "max@example.com",
-            mitarbeiterKontaktTelefonnummer = " 030 12 34567 ",
+            mitarbeiterKontaktTelefonnummer = " +49 30 12 34567 ",
             mitarbeiterKontaktBevorzugteKontaktsart = "EMAIL",
             krankheitArbeitsunfaehigkeitBeginn = auBeginn,
             krankheitArbeitsunfaehigkeitEnde = auEnde,
@@ -57,7 +57,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
         dto.person.nachname shouldBe "Mustermann"
         dto.person.geburtsdatum shouldBe "1990-01-01"
         dto.person.sozialversicherungsnummer shouldBe "12345678M001"
-        dto.person.kontakt.telefon shouldBe "030-12-34567"
+        dto.person.kontakt.telefon shouldBe "49-30-12-34567"
         dto.arbeitsunfaehigkeit.beginn shouldBe "2025-01-01"
         dto.arbeitsunfaehigkeit.ende shouldBe "2025-01-10"
         dto.entgelt.bezugszeitraum shouldBe "2025-01"
@@ -71,7 +71,6 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
             typ = "KG_ENTG",
             status = ExportStatus.CREATED,
             betriebsnummer = "87654321",
-            traceId = UUID.randomUUID().toString(),
             createdAt = erstelltAm
         )
         val entity1 = mockk<EntgeltbescheinigungAuEntity>()

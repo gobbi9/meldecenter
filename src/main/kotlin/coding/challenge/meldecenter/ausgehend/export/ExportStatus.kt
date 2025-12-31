@@ -16,6 +16,6 @@ enum class ExportStatus {
     /** Export ist fehlgeschlagen. */
     FAILED,
 
-    /** Export ist ein Duplikat. */
+    /** Export enthält nur Duplikate. */
     DUPLICATES,
 }

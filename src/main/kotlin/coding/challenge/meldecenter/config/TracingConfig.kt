@@ -44,3 +44,7 @@ class TracingConfig {
 
     fun getTraceIdMap(): ConcurrentHashMap<String, String> = traceIdMap
 }
+
+/** Gibt die Trace-ID von dem aktuellen Span zurück */
+fun Tracer.currentTraceId(): String =
+    currentSpan()?.context()?.traceId() ?: "unknown"

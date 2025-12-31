@@ -4,11 +4,14 @@ package coding.challenge.meldecenter.ausgehend.export.event
  * Typ eines Export-Events.
  */
 enum class ExportEventType {
+    /** Export wurde Meldungen zugewiesen. */
+    ASSIGNED,
+
     /** Export wurde gestartet. */
-    START_EXPORT,
+    START,
 
     /** Export wurde beendet. */
-    END_EXPORT,
+    END,
 
     /** Ein Fehler ist beim Export aufgetreten. */
     ERROR,

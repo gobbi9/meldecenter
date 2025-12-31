@@ -24,6 +24,9 @@ data class ExportEventEntity(
     /** Details zum Event. */
     val details: String? = null,
 
+    /** Die Trace ID des Exports. */
+    val traceId: String,
+
     /** Der Zeitpunkt der Erstellung. */
     val createdAt: LocalDateTime = LocalDateTime.now(),
 

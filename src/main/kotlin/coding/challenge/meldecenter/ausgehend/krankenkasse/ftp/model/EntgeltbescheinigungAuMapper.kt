@@ -23,7 +23,9 @@ fun EntgeltbescheinigungAuEntity.toKgBescheinigungDto(): KgBescheinigungDto =
             geburtsdatum = mitarbeiterGeburtsdatum.toString(),
             sozialversicherungsnummer = mitarbeiterSozialversicherungsnummer,
             kontakt = KgKontaktDto(
-                telefon = mitarbeiterKontaktTelefonnummer.trim().replace(" ", "-"),
+                telefon = mitarbeiterKontaktTelefonnummer.trim()
+                    .replace("+", "")
+                    .replace(" ", "-"),
             )
         ),
         arbeitsunfaehigkeit = KgArbeitsunfaehigkeitDto(
