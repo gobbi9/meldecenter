@@ -1,6 +1,6 @@
 package coding.challenge.meldecenter.eingehend.shared
 
-import java.time.Instant
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -13,5 +13,5 @@ data class MeldungDto(
     val typ: String,
     val quelle: String,
     val mandantId: String,
-    val erstelltAm: Instant,
+    val erstelltAm: LocalDateTime,
 )

@@ -1,9 +1,10 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
+import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
-import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalDate
 import java.util.UUID
 
@@ -17,14 +18,14 @@ data class DeuevAnmeldungEntity(
     @Id val meldecenterId: UUID = UUID.randomUUID(),
     /** ID der ursprünglichen Meldung. Beispiel: UUID.randomUUID() */
     val meldungId: UUID,
-    /** Typ der Meldung. Beispiel: "DEUEV_ANMELDUNG" */
+    /** Typ der Meldung. Siehe [MeldungTyp] */
     val meldungTyp: String,
     /** Quelle der Meldung. Beispiel: "EAP_SAP_HCM" */
     val meldungQuelle: String,
     /** ID des Mandanten. Beispiel: "MANDANT_4711" */
     val meldungMandantId: String,
-    /** Zeitpunkt der Erstellung. Beispiel: Instant.now() */
-    val meldungErstelltAm: Instant,
+    /** Zeitpunkt der Erstellung. Beispiel: LocalDateTime.now() */
+    val meldungErstelltAm: LocalDateTime,
     /** Betriebsnummer des Arbeitgebers. Beispiel: "12345678" */
     val arbeitgeberBetriebsnummer: String,
     /** ID des Mitarbeiters. Beispiel: "EMP-9981" */
@@ -55,12 +56,12 @@ data class DeuevAnmeldungEntity(
     val beschaeftigungBeginn: LocalDate,
     /** Art der Beschäftigung. Beispiel: "SOZIALVERSICHERUNGSPFLICHTIG" */
     val beschaeftigungBeschaeftigungsart: String,
-    /** Zeitpunkt der Erstellung im System. Beispiel: Instant.now() */
-    val auditCreatedAt: Instant = Instant.now(),
+    /** Zeitpunkt der Erstellung im System. Beispiel: LocalDateTime.now() */
+    val auditCreatedAt: LocalDateTime = LocalDateTime.now(),
     /** Ersteller des Datensatzes. Beispiel: "system" */
     val auditCreatedBy: String? = null,
-    /** Zeitpunkt der letzten Aktualisierung. Beispiel: Instant.now() */
-    var auditUpdatedAt: Instant? = null,
+    /** Zeitpunkt der letzten Aktualisierung. Beispiel: LocalDateTime.now() */
+    var auditUpdatedAt: LocalDateTime? = null,
     /** Letzter Bearbeiter des Datensatzes. Beispiel: "admin" */
     var auditUpdatedBy: String? = null,
     /** ID des zugehörigen Exports. */

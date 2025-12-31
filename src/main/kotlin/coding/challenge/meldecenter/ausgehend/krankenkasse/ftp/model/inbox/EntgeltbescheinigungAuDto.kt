@@ -27,8 +27,6 @@ data class EntgeltbescheinigungenAuDto(
 data class KgAbsenderDto(
     @field:XmlElement(name = "Betriebsnummer")
     val betriebsnummer: String,
-    @field:XmlElement(name = "Quelle")
-    val quelle: String,
     @field:XmlElement(name = "Erstellungszeitpunkt")
     val erstellungszeitpunkt: String
 )
@@ -47,7 +45,7 @@ data class KgBescheinigungDto(
     @field:XmlElement(name = "Arbeitsunfaehigkeit")
     val arbeitsunfaehigkeit: KgArbeitsunfaehigkeitDto,
     @field:XmlElement(name = "Entgelt")
-    val entgelt: KgEntgeltDto
+    val entgelt: KgEntgeltDto,
 )
 
 /**
@@ -64,7 +62,7 @@ data class KgPersonDto(
     @field:XmlElement(name = "Sozialversicherungsnummer")
     val sozialversicherungsnummer: String,
     @field:XmlElement(name = "Kontakt")
-    val kontakt: KgKontaktDto?
+    val kontakt: KgKontaktDto,
 )
 
 /**
@@ -73,7 +71,7 @@ data class KgPersonDto(
 @XmlAccessorType(XmlAccessType.FIELD)
 data class KgKontaktDto(
     @field:XmlElement(name = "Telefon")
-    val telefon: String?
+    val telefon: String,
 )
 
 /**
@@ -84,7 +82,7 @@ data class KgArbeitsunfaehigkeitDto(
     @field:XmlElement(name = "Beginn")
     val beginn: String,
     @field:XmlElement(name = "Ende")
-    val ende: String
+    val ende: String,
 )
 
 /**
@@ -95,5 +93,5 @@ data class KgEntgeltDto(
     @field:XmlElement(name = "Bezugszeitraum")
     val bezugszeitraum: String,
     @field:XmlElement(name = "Bruttoentgelt")
-    val bruttoentgelt: Double
+    val bruttoentgelt: String,
 )

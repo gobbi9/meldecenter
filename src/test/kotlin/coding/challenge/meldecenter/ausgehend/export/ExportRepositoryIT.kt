@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import java.time.Instant
+import java.time.LocalDateTime
 
 @MeldecenterSpringBootTest
 class ExportRepositoryIT(
@@ -17,17 +17,17 @@ class ExportRepositoryIT(
         val placeholder = repository.findById(1)
         placeholder.shouldNotBeNull()
         placeholder.id shouldBe 1
-        placeholder.typ shouldBe MeldungTyp.MELDUNG
+        placeholder.typ shouldBe MeldungTyp.MELDUNG.toString()
         placeholder.status shouldBe ExportStatus.DUPLICATES
-        placeholder.betriebsNummer shouldBe "00000000"
+        placeholder.betriebsnummer shouldBe "00000000"
         placeholder.traceId shouldBe "placeholder-trace-id"
     }
 
     "Should save and find ExportEntity" {
         val export = ExportEntity(
-            typ = MeldungTyp.DEUEV_ANMELDUNG,
+            typ = MeldungTyp.DEUEV_ANMELDUNG.toString(),
             status = ExportStatus.CREATED,
-            betriebsNummer = "B12345678",
+            betriebsnummer = "B12345678",
             traceId = "test-trace-id",
             createdBy = "test-user"
         )
@@ -37,7 +37,7 @@ class ExportRepositoryIT(
 
         val foundExport = repository.findById(savedExport.id)
         foundExport.shouldNotBeNull()
-        foundExport.typ shouldBe MeldungTyp.DEUEV_ANMELDUNG
+        foundExport.typ shouldBe MeldungTyp.DEUEV_ANMELDUNG.toString()
         foundExport.status shouldBe ExportStatus.CREATED
         foundExport.createdBy shouldBe "test-user"
     }
@@ -45,7 +45,7 @@ class ExportRepositoryIT(
     "Should update ExportEntity" {
         val placeholder = repository.findById(1L)
         placeholder.shouldNotBeNull()
-        val now = Instant.now()
+        val now = LocalDateTime.now()
         placeholder.updatedAt = now
         repository.save(placeholder)
         val updatedPlaceholder = repository.findById(placeholder.id)

@@ -3,7 +3,7 @@ package coding.challenge.meldecenter.ausgehend.export.event
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
-import java.time.Instant
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -25,7 +25,7 @@ data class ExportEventEntity(
     val details: String? = null,
 
     /** Der Zeitpunkt der Erstellung. */
-    val createdAt: Instant = Instant.now(),
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     /** Der Ersteller des Datensatzes. */
     val createdBy: String,

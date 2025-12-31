@@ -9,7 +9,7 @@ import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalDate
 import java.util.UUID
 
@@ -20,7 +20,7 @@ class DeuevAnmeldungMapperTest : StringSpec({
 
     val meldecenterId = UUID.randomUUID()
     val meldungId = UUID.randomUUID()
-    val erstelltAm = Instant.parse("2025-12-28T10:00:00Z")
+    val erstelltAm = LocalDateTime.parse("2025-12-28T10:00:00")
     val geburtsdatum = LocalDate.of(1990, 1, 1)
     val beginn = LocalDate.of(2025, 1, 1)
 

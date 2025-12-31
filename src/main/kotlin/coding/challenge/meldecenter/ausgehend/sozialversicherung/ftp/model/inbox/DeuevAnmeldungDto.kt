@@ -27,8 +27,6 @@ data class DeuevAnmeldungenDto(
 data class DeuevAbsenderDto(
     @field:XmlElement(name = "Betriebsnummer")
     val betriebsnummer: String,
-    @field:XmlElement(name = "Quelle")
-    val quelle: String,
     @field:XmlElement(name = "Erstellungszeitpunkt")
     val erstellungszeitpunkt: String
 )

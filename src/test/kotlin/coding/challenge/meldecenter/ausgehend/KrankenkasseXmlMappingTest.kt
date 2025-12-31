@@ -28,7 +28,7 @@ class KrankenkasseXmlMappingTest : StringSpec({
         dto.bescheinigungen.size shouldBe 3
         dto.bescheinigungen[0].mitarbeiterId shouldBe "EMP-4452"
         dto.bescheinigungen[0].person.vorname shouldBe "Anna"
-        dto.bescheinigungen[0].entgelt.bruttoentgelt shouldBe 3200.0
+        dto.bescheinigungen[0].entgelt.bruttoentgelt shouldBe "3200.00"
     }
 
     "Should map KG_RUECK XML correctly to Outbox response DTO" {

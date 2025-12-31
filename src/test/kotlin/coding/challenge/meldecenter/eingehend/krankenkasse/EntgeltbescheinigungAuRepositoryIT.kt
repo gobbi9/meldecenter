@@ -8,7 +8,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
-import java.time.Instant
+import java.time.LocalDateTime
 import java.util.UUID
 
 @MeldecenterSpringBootTest
@@ -35,7 +35,7 @@ class EntgeltbescheinigungAuRepositoryIT(
 
     "Should update an entity" {
         val existing = repository.findAll().first()
-        val now = Instant.now()
+        val now = LocalDateTime.now()
         existing.auditUpdatedAt = now
         repository.save(existing)
         val updated = repository.findById(existing.meldecenterId)

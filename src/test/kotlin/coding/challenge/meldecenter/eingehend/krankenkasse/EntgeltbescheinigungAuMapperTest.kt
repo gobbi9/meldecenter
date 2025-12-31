@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
-import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalDate
 import java.util.UUID
 
@@ -20,7 +20,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
 
     val meldecenterId = UUID.randomUUID()
     val meldungId = UUID.randomUUID()
-    val erstelltAm = Instant.parse("2025-03-10T11:05:00Z")
+    val erstelltAm = LocalDateTime.parse("2025-03-10T11:05:00")
     val geburtsdatum = LocalDate.of(1985, 9, 3)
     val auBeginn = LocalDate.of(2025, 3, 1)
     val auEnde = LocalDate.of(2025, 3, 20)

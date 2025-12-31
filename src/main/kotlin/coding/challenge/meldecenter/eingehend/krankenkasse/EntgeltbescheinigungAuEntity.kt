@@ -1,10 +1,11 @@
 package coding.challenge.meldecenter.eingehend.krankenkasse
 
+import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
 import java.math.BigDecimal
-import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalDate
 import java.util.UUID
 
@@ -17,14 +18,14 @@ data class EntgeltbescheinigungAuEntity(
     @Id val meldecenterId: UUID = UUID.randomUUID(),
     /** ID der ursprünglichen Meldung. */
     val meldungId: UUID,
-    /** Typ der Meldung. */
+    /** Typ der Meldung. Siehe [MeldungTyp] */
     val meldungTyp: String,
     /** Quelle der Meldung. */
     val meldungQuelle: String,
     /** ID des Mandanten. */
     val meldungMandantId: String,
     /** Zeitpunkt der Erstellung. */
-    val meldungErstelltAm: Instant,
+    val meldungErstelltAm: LocalDateTime,
     /** Betriebsnummer des Arbeitgebers. */
     val arbeitgeberBetriebsnummer: String,
     /** ID des Mitarbeiters. */
@@ -58,11 +59,11 @@ data class EntgeltbescheinigungAuEntity(
     /** Bruttoentgelt. */
     val entgeltBruttoentgelt: BigDecimal,
     /** Zeitpunkt der Erstellung im System. */
-    val auditCreatedAt: Instant = Instant.now(),
+    val auditCreatedAt: LocalDateTime = LocalDateTime.now(),
     /** Ersteller des Datensatzes. */
     val auditCreatedBy: String? = null,
     /** Zeitpunkt der letzten Aktualisierung. */
-    var auditUpdatedAt: Instant? = null,
+    var auditUpdatedAt: LocalDateTime? = null,
     /** Letzter Bearbeiter des Datensatzes. */
     var auditUpdatedBy: String? = null,
     /** ID des zugehörigen Exports. */
