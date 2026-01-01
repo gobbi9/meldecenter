@@ -1,9 +1,10 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
+import coding.challenge.meldecenter.shared.sozialversicherung.DeuevAnmeldungEntity
+import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository
-import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 /**

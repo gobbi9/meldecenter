@@ -1,4 +1,4 @@
-package coding.challenge.meldecenter.eingehend.sozialversicherung
+package coding.challenge.meldecenter.shared.sozialversicherung
 
 import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import org.springframework.data.annotation.Id

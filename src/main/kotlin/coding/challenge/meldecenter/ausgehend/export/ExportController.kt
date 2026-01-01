@@ -29,6 +29,11 @@ import org.springframework.web.bind.annotation.RestController
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Controller zur Verwaltung und Auslösung von Exportvorgängen.
+ *
+ * @property exporters Eine Liste aller registrierten [Exporter]-Implementierungen.
+ */
 @RestController
 @RequestMapping("/v1/meldung")
 @Tag(
@@ -42,6 +47,14 @@ class ExportController(
         SupervisorJob() + Dispatchers.Default
     )
 
+    /**
+     * Startet den Exportprozess für alle registrierten Exporter asynchron.
+     *
+     * Diese Methode stößt den Export im Hintergrund an und gibt sofort eine Antwort zurück.
+     * Die Ergebnisse des Exports werden geloggt, sobald sie abgeschlossen sind.
+     *
+     * @return Eine [ResponseEntity] mit dem Status [HttpStatus.ACCEPTED].
+     */
     @OptIn(ExperimentalCoroutinesApi::class) // flatMapConcat
     @PostMapping("/export")
     @ResponseStatus(HttpStatus.ACCEPTED)

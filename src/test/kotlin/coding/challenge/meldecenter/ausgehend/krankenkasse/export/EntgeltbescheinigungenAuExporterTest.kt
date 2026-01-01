@@ -1,7 +1,6 @@
 package coding.challenge.meldecenter.ausgehend.krankenkasse.export
 
 import coding.challenge.meldecenter.ausgehend.export.ExportEntity
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.toList
 class EntgeltbescheinigungenAuExporterTest : StringSpec({
 
     "Export should process all export groups" {
-        val repository = mockk<EntgeltbescheinigungAuRepository>()
+        val repository = mockk<EntgeltbescheinigungAuExportRepository>()
         val exportCreator = mockk<EntgeltbescheinigungenAuExportCreator>()
         val exportUploader = mockk<EntgeltbescheinigungenAuExportUploader>()
         val exporter = EntgeltbescheinigungenAuExporter(repository, exportCreator, exportUploader)
@@ -35,7 +34,7 @@ class EntgeltbescheinigungenAuExporterTest : StringSpec({
     }
 
     "export should skip nulls from creator or uploader" {
-        val repository = mockk<EntgeltbescheinigungAuRepository>()
+        val repository = mockk<EntgeltbescheinigungAuExportRepository>()
         val exportCreator = mockk<EntgeltbescheinigungenAuExportCreator>()
         val exportUploader = mockk<EntgeltbescheinigungenAuExportUploader>()
         val exporter = EntgeltbescheinigungenAuExporter(repository, exportCreator, exportUploader)

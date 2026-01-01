@@ -5,6 +5,7 @@ import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.EntgeltbescheinigungAuDto
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 
 /**
  * Mapping [EntgeltbescheinigungAuDto] zu [EntgeltbescheinigungAuEntity].

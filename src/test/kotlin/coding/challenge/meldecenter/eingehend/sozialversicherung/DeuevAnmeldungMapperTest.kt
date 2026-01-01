@@ -6,6 +6,7 @@ import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
 import coding.challenge.meldecenter.eingehend.shared.TelefonDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
+import coding.challenge.meldecenter.shared.sozialversicherung.DeuevAnmeldungEntity
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

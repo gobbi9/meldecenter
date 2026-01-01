@@ -9,10 +9,10 @@ import org.springframework.integration.ftp.session.DefaultFtpSessionFactory
 private val log = KotlinLogging.logger {}
 
 /**
- * Configuration class for FTP client settings and bean definitions.
+ * Konfigurationsklasse für die FTP-Client-Einstellungen und Bean-Definitionen.
  *
- * @property host The FTP server host, defaults to localhost.
- * @property port The FTP server port, defaults to 21.
+ * @property host Der Hostname des FTP-Servers (Standard: localhost).
+ * @property port Der Port des FTP-Servers (Standard: 21).
  */
 @Configuration
 class FtpClientConfig(
@@ -21,9 +21,12 @@ class FtpClientConfig(
 ) {
 
     /**
-     * Creates and configures a [DefaultFtpSessionFactory].
+     * Erstellt und konfiguriert eine [DefaultFtpSessionFactory].
      *
-     * @return A configured [DefaultFtpSessionFactory] instance.
+     * Die Session-Factory wird mit Host, Port, Benutzername und Passwort konfiguriert
+     * und verwendet den passiven Modus.
+     *
+     * @return Eine konfigurierte Instanz von [DefaultFtpSessionFactory].
      */
     @Bean
     fun sessionFactory(): DefaultFtpSessionFactory {

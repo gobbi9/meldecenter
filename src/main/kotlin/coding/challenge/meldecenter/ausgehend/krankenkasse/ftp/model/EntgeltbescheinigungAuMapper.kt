@@ -8,7 +8,7 @@ import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgBes
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgEntgeltDto
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgKontaktDto
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgPersonDto
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuEntity
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 
 /**
  * Mapping [EntgeltbescheinigungAuEntity] zu [KgBescheinigungDto].

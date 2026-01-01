@@ -10,18 +10,18 @@ import java.io.File
 private val log = KotlinLogging.logger {}
 
 /**
- * Service for performing FTP operations such as uploading, reading, and deleting files.
+ * Service für die Durchführung von FTP-Operationen wie Hochladen, Lesen und Löschen von Dateien.
  *
- * @property sessionFactory The factory used to create FTP sessions.
+ * @property sessionFactory Die Factory zur Erstellung von FTP-Sessions.
  */
 @Service
 class FtpService(private val sessionFactory: DefaultFtpSessionFactory) {
 
     /**
-     * Uploads a local file to the FTP server.
+     * Lädt eine lokale Datei auf den FTP-Server hoch.
      *
-     * @param localFilePath The path to the local file to be uploaded.
-     * @param remoteFileName The name of the file on the FTP server.
+     * @param localFilePath Der Pfad zur lokalen Datei, die hochgeladen werden soll.
+     * @param remoteFileName Der Ziel-Dateiname auf dem FTP-Server.
      */
     @NewSpan
     fun uploadFile(localFilePath: String, remoteFileName: String) {
@@ -34,10 +34,10 @@ class FtpService(private val sessionFactory: DefaultFtpSessionFactory) {
     }
 
     /**
-     * Reads a file from the FTP server and returns its content as a string.
+     * Liest eine Datei vom FTP-Server und gibt ihren Inhalt als String zurück.
      *
-     * @param remoteFileName The name of the file to be read from the FTP server.
-     * @return The content of the file as a string.
+     * @param remoteFileName Der Name der Datei auf dem FTP-Server.
+     * @return Der Inhalt der Datei als String.
      */
     @NewSpan
     fun readFile(remoteFileName: String): String {
@@ -52,10 +52,10 @@ class FtpService(private val sessionFactory: DefaultFtpSessionFactory) {
     }
 
     /**
-     * Deletes a file from the FTP server.
+     * Löscht eine Datei vom FTP-Server.
      *
-     * @param remoteFileName The name of the file to be deleted from the FTP server.
-     * @return True if the file was successfully deleted, false otherwise.
+     * @param remoteFileName Der Name der zu löschenden Datei auf dem FTP-Server.
+     * @return `true`, wenn die Datei erfolgreich gelöscht wurde, andernfalls `false`.
      */
     @NewSpan
     fun deleteFile(remoteFileName: String): Boolean {

@@ -3,6 +3,8 @@ package coding.challenge.meldecenter.eingehend.krankenkasse
 import coding.challenge.meldecenter.ausgehend.export.ExportEntity
 import coding.challenge.meldecenter.ausgehend.export.ExportRepository
 import coding.challenge.meldecenter.ausgehend.export.ExportStatus
+import coding.challenge.meldecenter.ausgehend.krankenkasse.export.EntgeltbescheinigungAuExportRepository
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 import io.kotest.core.spec.style.StringSpec
@@ -20,6 +22,7 @@ import java.util.UUID
 class EntgeltbescheinigungAuRepositoryIT(
     private val repository: EntgeltbescheinigungAuRepository,
     private val exportRepository: ExportRepository,
+    private val auExportRepository: EntgeltbescheinigungAuExportRepository,
 ) : StringSpec({
     extensions(SpringExtension)
 
@@ -84,7 +87,7 @@ class EntgeltbescheinigungAuRepositoryIT(
         val bn = "GRP_" + UUID.randomUUID().toString().take(8)
         repository.save(createEntity(bn = bn))
 
-        val groups = repository.findAllExportGroups().toList()
+        val groups = auExportRepository.findAllExportGroups().toList()
         groups.any { it.betriebsnummer == bn } shouldBe true
     }
 
@@ -97,7 +100,7 @@ class EntgeltbescheinigungAuRepositoryIT(
         repository.save(e1)
         repository.save(e2)
 
-        val duplicateCount = repository.deduplicate(bn)
+        val duplicateCount = auExportRepository.deduplicate(bn)
         duplicateCount shouldBe 1
 
         val entries = repository.findAll().toList()
@@ -116,11 +119,11 @@ class EntgeltbescheinigungAuRepositoryIT(
             betriebsnummer = bn,
             createdBy = "test"
         ))
-        val exportId = export.id!!
-        val assignedCount = repository.assignToExport(bn, exportId)
+        val exportId = export.id
+        val assignedCount = auExportRepository.assignToExport(bn, exportId)
         assignedCount shouldBe 1
 
-        val entries = repository.findByExportId(exportId).toList()
+        val entries = auExportRepository.findByExportId(exportId).toList()
         entries.size shouldBe 1
         entries.all { it.arbeitgeberBetriebsnummer == bn } shouldBe true
     }

@@ -1,6 +1,5 @@
 package coding.challenge.meldecenter.ausgehend.krankenkasse.export
 
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -9,7 +8,7 @@ import io.mockk.mockk
 
 class EntgeltbescheinigungenAuExportAssignerTest : StringSpec({
 
-    val repository = mockk<EntgeltbescheinigungAuRepository>()
+    val repository = mockk<EntgeltbescheinigungAuExportRepository>()
     val assigner = EntgeltbescheinigungenAuExportAssigner(repository)
 
     "DeduplicateAndAssignToExport should call repository deduplicate and assignToExport" {

@@ -11,13 +11,27 @@ import org.springframework.stereotype.Service
 private val log = KotlinLogging.logger {}
 
 /**
- *  Erstellt ein [ExportEntity], und ggf. löscht nicht zugeordnete Exports.
+ * Service zur Erstellung von Export-Entitäten für Entgeltbescheinigungen.
+ *
+ * Erstellt eine neue [ExportEntity] und löscht diese wieder, falls keine Meldungen zugeordnet werden konnten.
+ *
+ * @property exportAssigner Der Assigner zur Zuweisung von Meldungen zum Export.
+ * @property exportService Der Service zur Verwaltung von Exporten.
  */
 @Service
 class EntgeltbescheinigungenAuExportCreator(
     private val exportAssigner: EntgeltbescheinigungenAuExportAssigner,
     private val exportService: ExportService,
 ) {
+    /**
+     * Erstellt einen Export für die angegebene Gruppe und ordnet die Meldungen zu.
+     *
+     * Falls nach der Bereinigung von Duplikaten keine Meldungen übrig bleiben, wird der erstellte
+     * Export wieder gelöscht.
+     *
+     * @param exportGroup Die Gruppe von Entgeltbescheinigungen (basierend auf Betriebsnummer).
+     * @return Die erstellte [ExportEntity] oder `null`, falls keine Meldungen zugeordnet wurden.
+     */
     @NewSpan
     suspend fun assign(
         exportGroup: EntgeltbescheinigungAuExportGroup,

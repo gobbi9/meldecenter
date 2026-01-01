@@ -6,11 +6,22 @@ import org.springframework.stereotype.Service
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Service für die Verwaltung von Exportvorgängen.
+ *
+ * Stellt Methoden zum Speichern, Löschen und Aktualisieren von Exporten bereit.
+ */
 @Service
 class ExportService(
     private val exportRepository: ExportRepository,
 ) {
 
+    /**
+     * Speichert eine neue Export-Entität.
+     *
+     * @param newExport Die zu speichernde [ExportEntity].
+     * @return Die gespeicherte Entität mit generierter ID.
+     */
     @NewSpan
     suspend fun insert(newExport: ExportEntity): ExportEntity {
         log.trace { "Speichere Export: $newExport" }
@@ -19,6 +30,12 @@ class ExportService(
         return savedExport
     }
 
+    /**
+     * Löscht einen Export, dem keine Daten zugeordnet wurden (z.B. bei Duplikaten).
+     *
+     * @param exportId Die ID des zu löschenden Exports.
+     * @return Immer `null`.
+     */
     @NewSpan
     suspend fun nullAndDeleteUnassignedExport(exportId: Long): ExportEntity? {
         log.warn { "Race condition oder Export mit nur Duplikate? Export mit ID: $exportId wird gelöscht." }
@@ -27,12 +44,26 @@ class ExportService(
         return null
     }
 
+    /**
+     * Sucht einen Export anhand seiner ID.
+     *
+     * @param exportId Die ID des Exports.
+     * @return Die gefundene [ExportEntity] oder `null`.
+     */
     @NewSpan
     suspend fun findById(exportId: Long): ExportEntity? {
         log.debug { "Export mit ID: $exportId wird gefunden." }
         return exportRepository.findById(exportId)
     }
 
+    /**
+     * Aktualisiert den Status eines laufenden Exports.
+     *
+     * Erwartet, dass der aktuelle Status [ExportStatus.EXPORTING] ist.
+     *
+     * @param exportId Die ID des Exports.
+     * @param status Der neue Status.
+     */
     @NewSpan
     suspend fun updateStatus(exportId: Long, status: ExportStatus) {
         log.debug { "Aktualisiere Export Status: $exportId -> $status" }

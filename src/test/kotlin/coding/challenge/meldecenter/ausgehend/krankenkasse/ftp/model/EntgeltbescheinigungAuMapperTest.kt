@@ -3,7 +3,7 @@ package coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model
 import coding.challenge.meldecenter.ausgehend.export.ExportEntity
 import coding.challenge.meldecenter.ausgehend.export.ExportStatus
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgBescheinigungDto
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuEntity
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

@@ -7,7 +7,6 @@ import coding.challenge.meldecenter.ausgehend.export.toXmlFilename
 import coding.challenge.meldecenter.ausgehend.ftp.XmlFileUploader
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.EntgeltbescheinigungenAuDto
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.newEntgeltbescheinigungenAuXmlDto
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -22,7 +21,7 @@ class EntgeltbescheinigungenAuExportUploaderTest : StringSpec({
 
     "Upload should prepare, create XML DTO and upload" {
         val exportPreparer = mockk<ExportPreparer>()
-        val repository = mockk<EntgeltbescheinigungAuRepository>()
+        val repository = mockk<EntgeltbescheinigungAuExportRepository>()
         val xmlFileUploader = mockk<XmlFileUploader<EntgeltbescheinigungenAuDto>>()
         val exportService = mockk<ExportService>()
         val uploader = EntgeltbescheinigungenAuExportUploader(exportPreparer, repository, xmlFileUploader, exportService)
@@ -58,7 +57,7 @@ class EntgeltbescheinigungenAuExportUploaderTest : StringSpec({
 
     "Upload should return null if preparation fails" {
         val exportPreparer = mockk<ExportPreparer>()
-        val repository = mockk<EntgeltbescheinigungAuRepository>()
+        val repository = mockk<EntgeltbescheinigungAuExportRepository>()
         val xmlFileUploader = mockk<XmlFileUploader<EntgeltbescheinigungenAuDto>>()
         val exportService = mockk<ExportService>()
         val uploader = EntgeltbescheinigungenAuExportUploader(exportPreparer, repository, xmlFileUploader, exportService)

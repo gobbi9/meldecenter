@@ -1,6 +1,7 @@
 package coding.challenge.meldecenter.eingehend.krankenkasse
 
 import coding.challenge.meldecenter.eingehend.shared.meldungen.EntgeltbescheinigungAuDto
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import kotlinx.coroutines.flow.Flow

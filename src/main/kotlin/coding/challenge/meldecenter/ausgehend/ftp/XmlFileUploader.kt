@@ -17,6 +17,16 @@ import kotlin.io.path.readText
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Service zum Serialisieren von DTOs in XML und zum Hochladen auf einen FTP-Server.
+ *
+ * Verwendet JAXB für das Marshalling und den [FtpService] für die Übertragung.
+ *
+ * @param T Der Typ des zu serialisierenden Objekts.
+ * @property ftpService Der Service für FTP-Operationen.
+ * @property exportService Der Service zur Verwaltung von Export-Status.
+ * @property exportEventService Der Service zur Protokollierung von Export-Events.
+ */
 @Service
 class XmlFileUploader<T>(
     private val ftpService: FtpService,
@@ -25,6 +35,16 @@ class XmlFileUploader<T>(
 ) {
     private val contextCache = ConcurrentHashMap<Class<*>, JAXBContext>()
 
+    /**
+     * Serialisiert das übergebene DTO in XML und lädt es hoch.
+     *
+     * Erstellt eine temporäre Datei für den Marshalling-Prozess, lädt diese hoch
+     * und aktualisiert anschließend den Export-Status sowie die Events.
+     *
+     * @param xmlDto Das zu serialisierende Datenobjekt.
+     * @param xmlFilename Der Ziel-Dateiname auf dem FTP-Server.
+     * @param exportId Die ID des zugehörigen Exports.
+     */
     @NewSpan
     suspend fun upload(xmlDto: T, xmlFilename: String, exportId: Long) {
         log.debug { "Hochladen von: $xmlFilename, exportId: $exportId" }

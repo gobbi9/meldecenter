@@ -1,6 +1,7 @@
 package coding.challenge.meldecenter.eingehend.krankenkasse
 
 import coding.challenge.meldecenter.eingehend.shared.meldungen.EntgeltbescheinigungAuDto
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
