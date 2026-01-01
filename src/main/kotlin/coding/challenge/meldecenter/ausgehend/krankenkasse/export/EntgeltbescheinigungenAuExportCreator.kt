@@ -1,7 +1,7 @@
 package coding.challenge.meldecenter.ausgehend.krankenkasse.export
 
 import coding.challenge.meldecenter.ausgehend.export.ExportEntity
-import coding.challenge.meldecenter.ausgehend.export.ExportRepository
+import coding.challenge.meldecenter.ausgehend.export.ExportService
 import coding.challenge.meldecenter.ausgehend.export.newExport
 import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -15,8 +15,8 @@ private val log = KotlinLogging.logger {}
  */
 @Service
 class EntgeltbescheinigungenAuExportCreator(
-    private val entgeltbescheinigungenAuExportAssigner: EntgeltbescheinigungenAuExportAssigner,
-    private val exportRepository: ExportRepository,
+    private val exportAssigner: EntgeltbescheinigungenAuExportAssigner,
+    private val exportService: ExportService,
 ) {
     @NewSpan
     suspend fun assign(
@@ -24,36 +24,22 @@ class EntgeltbescheinigungenAuExportCreator(
     ): ExportEntity? {
         log.trace { "Entgeltbescheinigungen Gruppe: $exportGroup" }
         val savedExport = createEmptyExport(exportGroup.betriebsnummer)
-        val updatedCount =
-            entgeltbescheinigungenAuExportAssigner.deduplicateAndAssignToExport(
-                exportGroup.betriebsnummer,
-                exportId = savedExport.id
-            )
+        val updatedCount = exportAssigner.deduplicateAndAssignToExport(
+            exportGroup.betriebsnummer,
+            exportId = savedExport.id
+        )
         return when (updatedCount) {
-            0 -> nullAndDeleteUnassignedExport(exportId = savedExport.id)
+            0 -> exportService.nullAndDeleteUnassignedExport(exportId = savedExport.id)
             else -> savedExport
         }
     }
 
     private suspend fun createEmptyExport(
         betriebsnummer: String,
-    ): ExportEntity {
-        val export = newExport(
+    ): ExportEntity = exportService.insert(
+        newExport(
             typ = MeldungTyp.ENTGELTBESCHEINIGUNG_KG,
             betriebsnummer = betriebsnummer,
         )
-        log.trace { "Speichere Export: $export" }
-        val savedExport = exportRepository.save(export)
-        log.trace { "Export gespeichert: $savedExport" }
-        return savedExport
-    }
-
-    private suspend fun nullAndDeleteUnassignedExport(
-        exportId: Long,
-    ): ExportEntity? {
-        log.warn { "Race condition? Export mit ID: $exportId wird gelöscht." }
-        exportRepository.deleteById(exportId)
-        log.debug { "Export mit ID: $exportId wurde gelöscht." }
-        return null
-    }
+    )
 }

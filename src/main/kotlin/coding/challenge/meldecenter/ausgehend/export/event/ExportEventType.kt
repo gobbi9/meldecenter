@@ -4,9 +4,6 @@ package coding.challenge.meldecenter.ausgehend.export.event
  * Typ eines Export-Events.
  */
 enum class ExportEventType {
-    /** Export wurde Meldungen zugewiesen. */
-    ASSIGNED,
-
     /** Export wurde gestartet. */
     START,
 

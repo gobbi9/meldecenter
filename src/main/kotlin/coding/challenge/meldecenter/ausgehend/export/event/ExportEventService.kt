@@ -1,7 +1,5 @@
 package coding.challenge.meldecenter.ausgehend.export.event
 
-import coding.challenge.meldecenter.ausgehend.export.ExportEntity
-import coding.challenge.meldecenter.ausgehend.export.ExportStatus
 import coding.challenge.meldecenter.config.currentTraceId
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.Tracer
@@ -23,16 +21,6 @@ class ExportEventService(
     }
 
     @NewSpan
-    suspend fun saveAssignedEvent(exportId: Long) {
-        val exportEvent = newExportEvent(
-            exportId = exportId,
-            type = ExportEventType.ASSIGNED,
-            traceId = tracer.currentTraceId()
-        )
-        saveExportEvent(exportEvent)
-    }
-
-    @NewSpan
     suspend fun saveStartEvent(exportId: Long) {
         val exportEvent = newExportEvent(
             exportId = exportId,
@@ -43,15 +31,21 @@ class ExportEventService(
     }
 
     @NewSpan
-    suspend fun saveEndOrErrorEvent(export: ExportEntity) {
-        val exportEventType = when (export.status) {
-            ExportStatus.EXPORTED -> ExportEventType.END
-            ExportStatus.FAILED -> ExportEventType.ERROR
-            else -> throw IllegalArgumentException("Unbekannter Status: ${export.status}")
-        }
+    suspend fun saveEndEvent(exportId: Long) {
         val exportEvent = newExportEvent(
-            exportId = export.id,
-            type = exportEventType,
+            exportId = exportId,
+            type = ExportEventType.END,
+            traceId = tracer.currentTraceId()
+        )
+        saveExportEvent(exportEvent)
+    }
+
+    @NewSpan
+    suspend fun saveErrorEvent(exportId: Long, error: Throwable) {
+        val exportEvent = newExportEvent(
+            exportId = exportId,
+            type = ExportEventType.ERROR,
+            details = error.message?.take(1000),
             traceId = tracer.currentTraceId()
         )
         saveExportEvent(exportEvent)

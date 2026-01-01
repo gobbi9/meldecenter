@@ -1,8 +1,6 @@
-package coding.challenge.meldecenter.ausgehend.krankenkasse.export
+package coding.challenge.meldecenter.ausgehend.export
 
-import coding.challenge.meldecenter.ausgehend.export.ExportEntity
-import coding.challenge.meldecenter.ausgehend.export.ExportRepository
-import coding.challenge.meldecenter.ausgehend.export.ExportStatus
+import coding.challenge.meldecenter.ausgehend.export.event.ExportEventService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import org.springframework.stereotype.Service
@@ -10,11 +8,12 @@ import org.springframework.stereotype.Service
 private val log = KotlinLogging.logger {}
 
 /**
- *  Bereitet Entgeltbescheinigungen vor, bevor sie zu dem FTP Server hochgeladen werden.
+ *  Bereitet Exports vor, bevor sie zu dem FTP Server hochgeladen werden.
  */
 @Service
-class EntgeltbescheinigungenAuExportPreparer(
+class ExportPreparer(
     private val exportRepository: ExportRepository,
+    private val exportEventService: ExportEventService,
 ) {
     @NewSpan
     suspend fun prepare(export: ExportEntity): ExportEntity? {
@@ -27,7 +26,7 @@ class EntgeltbescheinigungenAuExportPreparer(
         return when (updateCount) {
             0 -> nullAndLogIt(export)
             1 -> findUpdatedExport(exportId = export.id)
-            else -> throw IllegalStateException("Mehr als ein Export mit ID: ${export.id} aktualisiert.")
+            else -> error("Mehr als ein Export mit ID: ${export.id} aktualisiert.")
         }
     }
 
@@ -45,6 +44,7 @@ class EntgeltbescheinigungenAuExportPreparer(
         if (updatedExport == null) {
             log.error { "Export mit ID: $exportId und status: $newStatus nicht gefunden." }
         }
+        exportEventService.saveStartEvent(exportId)
         return updatedExport
     }
 }

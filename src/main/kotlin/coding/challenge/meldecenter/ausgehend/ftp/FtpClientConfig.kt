@@ -26,7 +26,7 @@ class FtpClientConfig(
      * @return A configured [DefaultFtpSessionFactory] instance.
      */
     @Bean
-    fun ftpSessionFactory(): DefaultFtpSessionFactory {
+    fun sessionFactory(): DefaultFtpSessionFactory {
         log.debug { "Creating DefaultFtpSessionFactory for host: $host, port: $port" }
         val sf = DefaultFtpSessionFactory()
         sf.setHost(host)
@@ -35,17 +35,5 @@ class FtpClientConfig(
         sf.setPassword("admin")
         sf.setClientMode(2) // PASSIVE_LOCAL_DATA_CONNECTION_MODE
         return sf
-    }
-
-    /**
-     * Creates a [FtpService] bean.
-     *
-     * @param sessionFactory The [DefaultFtpSessionFactory] to be used by the service.
-     * @return An instance of [FtpService].
-     */
-    @Bean
-    fun ftpService(sessionFactory: DefaultFtpSessionFactory): FtpService {
-        log.debug { "Creating FtpService bean" }
-        return FtpService(sessionFactory)
     }
 }
