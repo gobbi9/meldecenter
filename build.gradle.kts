@@ -1,7 +1,8 @@
 group = "coding.challenge"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 description = "Coding Challenge mit Spring Boot 3 und PostgreSQL"
 
+// Versions managed by gradle/libs.versions.toml
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
@@ -102,6 +103,7 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+// Set application version for banner.txt
 tasks.jar {
     manifest {
         attributes(
