@@ -7,7 +7,7 @@ import java.util.UUID
 
 class ExportMapperTest : StringSpec({
 
-    "toXmlFilename should return correctly formatted filename" {
+    "ToXmlFilename should return correctly formatted filename" {
         val createdAt = LocalDateTime.of(2025, 12, 31, 10, 0)
         val export = ExportEntity(
             id = 123L,

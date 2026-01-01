@@ -18,7 +18,7 @@ import java.util.UUID
 
 class EntgeltbescheinigungAuMapperTest : StringSpec({
 
-    "toKgBescheinigungDto should map entity to DTO" {
+    "ToKgBescheinigungDto should map entity to DTO" {
         val meldungId = UUID.randomUUID()
         val mitarbeiterId = "EMP-123"
         val geburtsdatum = LocalDate.of(1990, 1, 1)
@@ -64,7 +64,7 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
         dto.entgelt.bruttoentgelt shouldBe "4000.00"
     }
 
-    "newEntgeltbescheinigungenAuXmlDto should static mock call toKgBescheinigungDto" {
+    "NewEntgeltbescheinigungenAuXmlDto should static mock call toKgBescheinigungDto" {
         val erstelltAm = LocalDateTime.of(2025, 3, 10, 11, 5)
         val export = ExportEntity(
             id = 1L,

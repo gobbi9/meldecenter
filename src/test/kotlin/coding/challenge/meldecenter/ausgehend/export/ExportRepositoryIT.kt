@@ -51,4 +51,34 @@ class ExportRepositoryIT(
         updatedPlaceholder.shouldNotBeNull()
         updatedPlaceholder.updatedAt shouldBe now
     }
+
+    "Should updateStatus of ExportEntity" {
+        val export = repository.save(ExportEntity(
+            typ = MeldungTyp.DEUEV_ANMELDUNG.toString(),
+            status = ExportStatus.CREATED,
+            betriebsnummer = "B11111111",
+            createdBy = "test"
+        ))
+        val updatedCount = repository.updateStatus(export.id, ExportStatus.EXPORTING, ExportStatus.CREATED)
+        updatedCount shouldBe 1
+
+        val updatedExport = repository.findById(export.id)
+        updatedExport?.status shouldBe ExportStatus.EXPORTING
+    }
+
+    "Should findByIdAndStatus" {
+        val export = repository.save(ExportEntity(
+            typ = MeldungTyp.DEUEV_ANMELDUNG.toString(),
+            status = ExportStatus.CREATED,
+            betriebsnummer = "B22222222",
+            createdBy = "test"
+        ))
+
+        val found = repository.findByIdAndStatus(export.id, ExportStatus.CREATED)
+        found.shouldNotBeNull()
+        found.id shouldBe export.id
+
+        val notFound = repository.findByIdAndStatus(export.id, ExportStatus.EXPORTING)
+        notFound shouldBe null
+    }
 })
