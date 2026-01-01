@@ -21,7 +21,7 @@ class ExportService(
 
     @NewSpan
     suspend fun nullAndDeleteUnassignedExport(exportId: Long): ExportEntity? {
-        log.warn { "Race condition? Export mit ID: $exportId wird gelöscht." }
+        log.warn { "Race condition oder Export mit nur Duplikate? Export mit ID: $exportId wird gelöscht." }
         exportRepository.deleteById(exportId)
         log.debug { "Export mit ID: $exportId wurde gelöscht." }
         return null

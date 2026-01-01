@@ -62,8 +62,10 @@ Um die Unit- und Integrationstests auszuführen, verwenden Sie:
 ./gradlew test
 ```
 
-**Wichtig:** Um die Tests lokal erfolgreich auszuführen – auch wenn der FTP-Container bereits durch `./gradlew composeUp` oder `./gradlew bootRun` aktiv ist –, wird dieser von Testcontainers wiederverwendet statt neu gestartet. Dies ist eine Einschränkung des FTP-Images: Port 21000 muss verfügbar sein und kann nicht geändert werden.
+**Wichtig:** Um die Tests lokal erfolgreich auszuführen – auch wenn der FTP-Container bereits durch `./gradlew composeUp` oder `./gradlew bootRun` aktiv ist –, wird dieser von Testcontainers wiederverwendet statt neu gestartet. Dies ist eine Einschränkung des FTP-Images: Port `21000` muss verfügbar sein und kann nicht geändert werden.
+
+Manchmal kann es vorkommen, dass der FTP-Container beim Starten fehlschlägt, scheint ein Problem mit dem Image zu sein.
 
 ## Weitere Dokumentation
 
-- [Details zum XML-Mapping](src/test/resources/README.md)
+- [Details zum Test XML-Mapping](src/test/resources/README.md)

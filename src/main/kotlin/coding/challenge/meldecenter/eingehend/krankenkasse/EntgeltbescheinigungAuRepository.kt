@@ -1,7 +1,6 @@
 package coding.challenge.meldecenter.eingehend.krankenkasse
 
 import coding.challenge.meldecenter.ausgehend.krankenkasse.export.EntgeltbescheinigungAuExportGroup
-import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Pageable
 import org.springframework.data.r2dbc.repository.Modifying
@@ -10,8 +9,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
-
-private val log = KotlinLogging.logger { }
 
 /**
  * Repository für [EntgeltbescheinigungAuEntity].
@@ -25,9 +22,10 @@ interface EntgeltbescheinigungAuRepository :
 
     @Query(
         """
-        SELECT BETRIEBSNUMMER, COUNT(*) AS COUNT
+        SELECT ARBEITGEBER_BETRIEBSNUMMER AS BETRIEBSNUMMER, COUNT(*) AS COUNT
         FROM ENTGELTBESCHEINIGUNG_AU
-        GROUP BY BETRIEBSNUMMER
+        WHERE EXPORT_ID IS NULL
+        GROUP BY ARBEITGEBER_BETRIEBSNUMMER
         """
     )
     fun findAllExportGroups(): Flow<EntgeltbescheinigungAuExportGroup>
@@ -38,22 +36,33 @@ interface EntgeltbescheinigungAuRepository :
      */
     @Query(
         """
-        WITH DUPLICATES AS (
+        WITH EXPORTED AS (
+            SELECT DISTINCT MELDUNG_ID
+            FROM ENTGELTBESCHEINIGUNG_AU
+            WHERE EXPORT_ID IS NOT NULL
+        ),
+        DUPLICATES AS (
             SELECT MELDECENTER_ID FROM (
-                SELECT MELDECENTER_ID,
+                SELECT MELDECENTER_ID, MELDUNG_ID,
                        ROW_NUMBER() OVER (
                             PARTITION BY MELDUNG_ID
-                            ORDER BY CREATED_AT DESC
+                            ORDER BY AUDIT_CREATED_AT DESC
                        ) AS ROW_NUMBER
                 FROM ENTGELTBESCHEINIGUNG_AU
+                WHERE MELDUNG_ID NOT IN (SELECT MELDUNG_ID FROM EXPORTED)
             ) _
             WHERE ROW_NUMBER > 1
+            UNION
+            SELECT MELDECENTER_ID
+            FROM ENTGELTBESCHEINIGUNG_AU
+            WHERE MELDUNG_ID IN (SELECT MELDUNG_ID FROM EXPORTED)
+            AND EXPORT_ID IS NULL
         )
 
         UPDATE ENTGELTBESCHEINIGUNG_AU
         SET EXPORT_ID = :duplicatesExportId
         WHERE EXPORT_ID IS NULL
-        AND MELDECENTER_ID IN (DUPLICATES)
+        AND MELDECENTER_ID IN (SELECT MELDECENTER_ID FROM DUPLICATES)
     """
     )
     @Modifying
@@ -66,7 +75,7 @@ interface EntgeltbescheinigungAuRepository :
         """
         UPDATE ENTGELTBESCHEINIGUNG_AU
         SET EXPORT_ID =  :exportId
-        WHERE BETRIEBSNUMMER = :betriebsnummer
+        WHERE ARBEITGEBER_BETRIEBSNUMMER = :betriebsnummer
         AND EXPORT_ID IS NULL
     """
     )

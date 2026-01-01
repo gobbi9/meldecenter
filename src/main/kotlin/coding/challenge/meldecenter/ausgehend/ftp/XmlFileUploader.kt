@@ -40,7 +40,7 @@ class XmlFileUploader<T>(
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
 
             marshaller.marshal(xmlDto, tempFile.toFile())
-            log.trace { "XML-Datei: ${tempFile.readText()}" }
+            log.trace { "XML-Datei: \n${tempFile.readText()}" }
 
             ftpService.uploadFile(
                 localFilePath = tempFile.toAbsolutePath().toString(),

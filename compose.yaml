@@ -33,6 +33,8 @@ services:
       - 'jaeger-tmp:/tmp'
   ftp:
     image: 'delfer/alpine-ftp-server:latest'
+    labels:
+      org.springframework.boot.readiness-check.tcp.disable: true
     environment:
       - 'USERS=admin|admin'
       - 'MIN_PORT=21000'
