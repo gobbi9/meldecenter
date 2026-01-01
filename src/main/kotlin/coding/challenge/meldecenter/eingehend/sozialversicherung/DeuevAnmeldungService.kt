@@ -1,7 +1,6 @@
 package coding.challenge.meldecenter.eingehend.sozialversicherung
 
 import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
-import coding.challenge.meldecenter.shared.sozialversicherung.DeuevAnmeldungEntity
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import kotlinx.coroutines.flow.Flow

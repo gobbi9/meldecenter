@@ -1,11 +1,11 @@
 package coding.challenge.meldecenter.eingehend.shared.meldungen
 
 import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltDto
+import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuKontaktDto
 import coding.challenge.meldecenter.eingehend.krankenkasse.KrankheitDto
 import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuKontaktDto
 import java.util.UUID
 
 /**

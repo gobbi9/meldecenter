@@ -1,9 +1,8 @@
 package coding.challenge.meldecenter.eingehend.eap
 
-import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
-
-import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
 import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuRepository
+import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungRepository
+import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.toList

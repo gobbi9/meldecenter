@@ -1,10 +1,10 @@
 package coding.challenge.meldecenter.eingehend.eap
 
+import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuController
 import coding.challenge.meldecenter.eingehend.shared.meldungen.DeuevAnmeldungDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.EntgeltbescheinigungAuDto
 import coding.challenge.meldecenter.eingehend.shared.meldungen.Meldung
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungController
-import coding.challenge.meldecenter.eingehend.krankenkasse.EntgeltbescheinigungAuController
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.annotation.NewSpan
 import io.swagger.v3.oas.annotations.Operation

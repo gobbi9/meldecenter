@@ -1,9 +1,9 @@
 package coding.challenge.meldecenter.eingehend.shared.meldungen
 
 import coding.challenge.meldecenter.eingehend.shared.ArbeitgeberDto
-import coding.challenge.meldecenter.eingehend.sozialversicherung.BeschaeftigungDto
 import coding.challenge.meldecenter.eingehend.shared.MeldungDto
 import coding.challenge.meldecenter.eingehend.shared.MitarbeiterDto
+import coding.challenge.meldecenter.eingehend.sozialversicherung.BeschaeftigungDto
 import coding.challenge.meldecenter.eingehend.sozialversicherung.DeuevAnmeldungKontaktDto
 import java.util.UUID
 

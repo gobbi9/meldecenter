@@ -2,12 +2,15 @@ package coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model
 
 import coding.challenge.meldecenter.ausgehend.export.ExportEntity
 import coding.challenge.meldecenter.ausgehend.export.ExportStatus
+import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgArbeitsunfaehigkeitDto
 import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgBescheinigungDto
+import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgEntgeltDto
+import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgKontaktDto
+import coding.challenge.meldecenter.ausgehend.krankenkasse.ftp.model.inbox.KgPersonDto
 import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
@@ -73,22 +76,56 @@ class EntgeltbescheinigungAuMapperTest : StringSpec({
             betriebsnummer = "87654321",
             createdAt = erstelltAm
         )
-        val entity1 = mockk<EntgeltbescheinigungAuEntity>()
-        val entity2 = mockk<EntgeltbescheinigungAuEntity>()
+        val entity1 = EntgeltbescheinigungAuEntity(
+            meldungId = UUID.randomUUID(),
+            meldungTyp = "ENTGELTBESCHEINIGUNG_KG",
+            meldungQuelle = "EAP_DATEV",
+            meldungMandantId = "MANDANT_1",
+            meldungErstelltAm = erstelltAm,
+            arbeitgeberBetriebsnummer = "87654321",
+            mitarbeiterId = "EMP-1",
+            mitarbeiterVorname = "Max",
+            mitarbeiterNachname = "Mustermann",
+            mitarbeiterGeburtsdatum = LocalDate.of(1990, 1, 1),
+            mitarbeiterSozialversicherungsnummer = "SVN1",
+            mitarbeiterAnschriftStrasse = "Strasse",
+            mitarbeiterAnschriftPlz = "12345",
+            mitarbeiterAnschriftOrt = "Berlin",
+            mitarbeiterKontaktEmail = "email",
+            mitarbeiterKontaktTelefonnummer = "123",
+            mitarbeiterKontaktBevorzugteKontaktsart = "EMAIL",
+            krankheitArbeitsunfaehigkeitBeginn = LocalDate.of(2025, 1, 1),
+            krankheitArbeitsunfaehigkeitEnde = LocalDate.of(2025, 1, 10),
+            entgeltBezugszeitraum = "2025-01",
+            entgeltBruttoentgelt = BigDecimal("4000.00")
+        )
+        val entity2 = entity1.copy(meldecenterId = UUID.randomUUID(), meldungId = UUID.randomUUID())
         val meldungen = listOf(entity1, entity2)
 
         mockkStatic(EntgeltbescheinigungAuEntity::toKgBescheinigungDto)
 
-        val mockDto = mockk<KgBescheinigungDto>()
-        every { any<EntgeltbescheinigungAuEntity>().toKgBescheinigungDto() } returns mockDto
+        val realDto = KgBescheinigungDto(
+            referenzId = "ref-1",
+            mitarbeiterId = "EMP-1",
+            person = KgPersonDto(
+                vorname = "Max",
+                nachname = "Mustermann",
+                geburtsdatum = "1990-01-01",
+                sozialversicherungsnummer = "SVN1",
+                kontakt = KgKontaktDto(telefon = "123")
+            ),
+            arbeitsunfaehigkeit = KgArbeitsunfaehigkeitDto("2025-01-01", "2025-01-10"),
+            entgelt = KgEntgeltDto("2025-01", "4000.00")
+        )
+        every { any<EntgeltbescheinigungAuEntity>().toKgBescheinigungDto() } returns realDto
 
         val result = newEntgeltbescheinigungenAuXmlDto(export, meldungen)
 
         result.absender.betriebsnummer shouldBe "87654321"
         result.absender.erstellungszeitpunkt shouldBe erstelltAm.toString()
         result.bescheinigungen.size shouldBe 2
-        result.bescheinigungen[0] shouldBe mockDto
-        result.bescheinigungen[1] shouldBe mockDto
+        result.bescheinigungen[0] shouldBe realDto
+        result.bescheinigungen[1] shouldBe realDto
 
         verify(exactly = 2) { any<EntgeltbescheinigungAuEntity>().toKgBescheinigungDto() }
 

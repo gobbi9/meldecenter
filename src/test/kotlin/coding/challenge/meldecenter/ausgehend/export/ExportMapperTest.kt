@@ -3,7 +3,6 @@ package coding.challenge.meldecenter.ausgehend.export
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDateTime
-import java.util.UUID
 
 class ExportMapperTest : StringSpec({
 

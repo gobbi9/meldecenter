@@ -4,8 +4,8 @@ import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
-import java.time.LocalDateTime
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**

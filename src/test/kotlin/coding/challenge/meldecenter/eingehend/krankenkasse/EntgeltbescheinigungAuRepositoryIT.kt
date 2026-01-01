@@ -4,8 +4,8 @@ import coding.challenge.meldecenter.ausgehend.export.ExportEntity
 import coding.challenge.meldecenter.ausgehend.export.ExportRepository
 import coding.challenge.meldecenter.ausgehend.export.ExportStatus
 import coding.challenge.meldecenter.ausgehend.krankenkasse.export.EntgeltbescheinigungAuExportRepository
-import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import coding.challenge.meldecenter.eingehend.shared.MeldungTyp
+import coding.challenge.meldecenter.shared.krankenkasse.EntgeltbescheinigungAuEntity
 import coding.challenge.meldecenter.testconfig.MeldecenterSpringBootTest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension

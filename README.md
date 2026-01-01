@@ -66,6 +66,33 @@ Um die Unit- und Integrationstests auszuführen, verwenden Sie:
 
 Manchmal kann es vorkommen, dass der FTP-Container beim Starten fehlschlägt, scheint ein Problem mit dem Image zu sein.
 
+## End-to-End Tests
+
+### Swagger UI
+Die interaktive API-Dokumentation (Swagger UI) ist unter folgendem Link verfügbar, sobald die Anwendung läuft:
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+### Basis E2E-Test-Skript ausführen
+Ein einfaches Bash-Skript steht zur Verfügung, um den Workflow der Anwendung zu testen (Meldungen senden und Export auslösen):
+
+1. Stellen Sie sicher, dass die Anwendung gestartet wurde.
+2. Machen Sie das Skript ausführbar:
+   ```bash
+   chmod +x simple-e2e-test.sh
+   ```
+3. Führen Sie das Skript aus:
+   ```bash
+   ./simple-e2e-test.sh
+   ```
+
+### Speicherort der generierten XML-Dateien
+Die vom System generierten XML-Dateien werden auf den FTP-Server hochgeladen. Im lokalen Dateisystem sind diese (bedingt durch das Docker-Volume-Mapping) hier zu finden:
+`src/test/resources/ausgehend/ftp`
+
+Die Struktur der generierten XML-Dateien orientiert sich an den Referenzdateien im Verzeichnis `src/test/resources/eingehend/ftp/inbox`.
+
+**Hinweis: Die automatisierte Verarbeitung der XML-Dateien durch den fiktiven FTP-Server sowie die damit verbundene Erstellung von Antwortdateien in den Verzeichnissen `error` und `outbox` wurden im Rahmen dieser Implementierung nicht berücksichtigt.**
+
 ## Weitere Dokumentation
 
 - [Details zum Test XML-Mapping](src/test/resources/README.md)
