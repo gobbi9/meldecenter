@@ -1,27 +1,41 @@
 package coding.challenge.meldecenter.config
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.micrometer.tracing.Span
+import io.micrometer.context.ContextSnapshot
+import io.micrometer.observation.Observation
+import io.micrometer.observation.ObservationRegistry
 import io.micrometer.tracing.Tracer
 import io.micrometer.tracing.annotation.NewSpan
 import kotlinx.coroutines.ThreadContextElement
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.reactor.ReactorContext
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
-import org.slf4j.MDC
+import org.springframework.core.Ordered
 import org.springframework.stereotype.Component
+import reactor.util.context.Context
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 private val log = KotlinLogging.logger {}
 
 /**
- * Workaround, damit @NewSpan mit coroutines funktioniert
+ * Workaround, damit @NewSpan mit coroutines funktioniert.
+ * Verwendet Micrometer Observation für bessere Context-Propagation zu Reactor.
  */
 @Aspect
 @Component
-class CoroutinesNewSpanAspect(private val tracer: Tracer) {
+class CoroutinesNewSpanAspect(
+    private val tracer: Tracer,
+    private val observationRegistry: ObservationRegistry,
+) : Ordered {
+
+    override fun getOrder(): Int = Ordered.HIGHEST_PRECEDENCE + 100
 
     @Around("@annotation(io.micrometer.tracing.annotation.NewSpan)")
     fun aroundNewSpan(pjp: ProceedingJoinPoint): Any? {
@@ -39,16 +53,20 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
             return handleSuspend(pjp, spanName)
         }
 
-        val nextSpan = tracer.nextSpan().name(spanName)
-        return tracer.withSpan(nextSpan.start()).use {
-            try {
-                pjp.proceed()
-            } catch (e: Throwable) {
-                nextSpan.error(e)
-                throw e
-            } finally {
-                nextSpan.end()
+        val observation = Observation.start(spanName, observationRegistry)
+        return try {
+            observation.openScope().use {
+                val result = pjp.proceed()
+                if (result is Flow<*>) {
+                    return handleFlow(result, observation)
+                }
+                observation.stop()
+                result
             }
+        } catch (e: Throwable) {
+            observation.error(e)
+            observation.stop()
+            throw e
         }
     }
 
@@ -57,100 +75,108 @@ class CoroutinesNewSpanAspect(private val tracer: Tracer) {
         spanName: String,
     ): Any? {
         val args = pjp.args
-        val nextSpan = tracer.nextSpan().name(spanName).start()
-
-        val newArgs = args.copyOf()
         val continuation = args.last() as Continuation<Any?>
 
+        val observation = Observation.start(spanName, observationRegistry)
+
+        val newArgs = args.copyOf()
         val wrappedContinuation = object : Continuation<Any?> {
             override val context: CoroutineContext
                 get() = continuation.context +
-                    MdcContextElement(
-                        nextSpan.context().traceId(),
-                        nextSpan.context().spanId()
-                    ) +
-                    TracingContextElement(tracer, nextSpan)
+                    ObservationContextElement(observation) +
+                    createReactorContext(continuation.context, observation)
 
             override fun resumeWith(result: Result<Any?>) {
+                val value = result.getOrNull()
+                if (value is Flow<*>) {
+                    continuation.resumeWith(
+                        Result.success(
+                            handleFlow(
+                                value,
+                                observation,
+                                continuation.context
+                            )
+                        )
+                    )
+                    return
+                }
+
                 try {
-                    result.exceptionOrNull()?.let { nextSpan.error(it) }
+                    result.exceptionOrNull()?.let { observation.error(it) }
                     continuation.resumeWith(result)
                 } finally {
-                    nextSpan.end()
+                    observation.stop()
                 }
             }
         }
         newArgs[newArgs.size - 1] = wrappedContinuation
 
-        val scope = tracer.withSpan(nextSpan)
-        return try {
-            val oldTraceId = MDC.get("traceId")
-            val oldSpanId = MDC.get("spanId")
-            MDC.put("traceId", nextSpan.context().traceId())
-            MDC.put("spanId", nextSpan.context().spanId())
+        return observation.openScope().use {
             try {
                 val result = pjp.proceed(newArgs)
                 if (result != kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED) {
-                    nextSpan.end()
+                    if (result is Flow<*>) {
+                        return handleFlow(
+                            result,
+                            observation,
+                            continuation.context
+                        )
+                    }
+                    observation.stop()
                 }
                 result
-            } finally {
-                if (oldTraceId != null) MDC.put(
-                    "traceId",
-                    oldTraceId
-                ) else MDC.remove("traceId")
-                if (oldSpanId != null) MDC.put(
-                    "spanId",
-                    oldSpanId
-                ) else MDC.remove("spanId")
+            } catch (e: Throwable) {
+                observation.error(e)
+                observation.stop()
+                throw e
             }
-        } catch (e: Throwable) {
-            nextSpan.error(e)
-            nextSpan.end()
-            throw e
-        } finally {
-            scope.close()
         }
     }
 
-    class MdcContextElement(
-        private val traceId: String,
-        private val spanId: String,
-    ) : ThreadContextElement<Map<String, String>?> {
+    private fun createReactorContext(
+        coroutineContext: CoroutineContext,
+        observation: Observation,
+    ): ReactorContext {
+        val currentReactorContext =
+            coroutineContext[ReactorContext]?.context ?: Context.empty()
+        return observation.openScope().use {
+            val snapshot = ContextSnapshot.captureAll()
+            ReactorContext(snapshot.updateContext(currentReactorContext))
+        }
+    }
+
+    private fun handleFlow(
+        flow: Flow<*>,
+        observation: Observation,
+        baseCoroutineContext: CoroutineContext? = null,
+    ): Flow<*> {
+        val reactorContext =
+            createReactorContext(
+                baseCoroutineContext ?: EmptyCoroutineContext,
+                observation
+            )
+        return flow
+            .onCompletion { observation.stop() }
+            .flowOn(
+                ObservationContextElement(observation) +
+                    reactorContext
+            )
+    }
+
+    class ObservationContextElement(
+        val observation: Observation,
+    ) : ThreadContextElement<Observation.Scope> {
         override val key: CoroutineContext.Key<*> get() = Key
 
-        companion object Key : CoroutineContext.Key<MdcContextElement>
+        companion object Key : CoroutineContext.Key<ObservationContextElement>
 
-        override fun updateThreadContext(context: CoroutineContext): Map<String, String>? {
-            val oldState = MDC.getCopyOfContextMap()
-            MDC.put("traceId", traceId)
-            MDC.put("spanId", spanId)
-            return oldState
+        override fun updateThreadContext(context: CoroutineContext): Observation.Scope {
+            return observation.openScope()
         }
 
         override fun restoreThreadContext(
             context: CoroutineContext,
-            oldState: Map<String, String>?,
-        ) {
-            if (oldState != null) MDC.setContextMap(oldState) else MDC.clear()
-        }
-    }
-
-    class TracingContextElement(
-        private val tracer: Tracer,
-        private val span: Span,
-    ) : ThreadContextElement<Tracer.SpanInScope> {
-        override val key: CoroutineContext.Key<*> get() = Key
-
-        companion object Key : CoroutineContext.Key<TracingContextElement>
-
-        override fun updateThreadContext(context: CoroutineContext): Tracer.SpanInScope {
-            return tracer.withSpan(span)
-        }
-
-        override fun restoreThreadContext(
-            context: CoroutineContext,
-            oldState: Tracer.SpanInScope,
+            oldState: Observation.Scope,
         ) {
             oldState.close()
         }

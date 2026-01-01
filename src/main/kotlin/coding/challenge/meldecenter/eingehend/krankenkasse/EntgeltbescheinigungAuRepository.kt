@@ -36,37 +36,21 @@ interface EntgeltbescheinigungAuRepository :
      */
     @Query(
         """
-        WITH EXPORTED AS (
-            SELECT DISTINCT MELDUNG_ID
-            FROM ENTGELTBESCHEINIGUNG_AU
-            WHERE EXPORT_ID IS NOT NULL
-        ),
-        DUPLICATES AS (
-            SELECT MELDECENTER_ID FROM (
-                SELECT MELDECENTER_ID, MELDUNG_ID,
-                       ROW_NUMBER() OVER (
-                            PARTITION BY MELDUNG_ID
-                            ORDER BY AUDIT_CREATED_AT DESC
-                       ) AS ROW_NUMBER
-                FROM ENTGELTBESCHEINIGUNG_AU
-                WHERE MELDUNG_ID NOT IN (SELECT MELDUNG_ID FROM EXPORTED)
-            ) _
-            WHERE ROW_NUMBER > 1
-            UNION
-            SELECT MELDECENTER_ID
-            FROM ENTGELTBESCHEINIGUNG_AU
-            WHERE MELDUNG_ID IN (SELECT MELDUNG_ID FROM EXPORTED)
-            AND EXPORT_ID IS NULL
-        )
-
-        UPDATE ENTGELTBESCHEINIGUNG_AU
+        UPDATE ENTGELTBESCHEINIGUNG_AU E1
         SET EXPORT_ID = :duplicatesExportId
-        WHERE EXPORT_ID IS NULL
-        AND MELDECENTER_ID IN (SELECT MELDECENTER_ID FROM DUPLICATES)
+        WHERE ARBEITGEBER_BETRIEBSNUMMER = :betriebsnummer
+            AND EXPORT_ID IS NULL
+            AND EXISTS (
+                SELECT 1 FROM ENTGELTBESCHEINIGUNG_AU E2
+                WHERE E2.MELDUNG_ID = E1.MELDUNG_ID AND (
+                    E2.EXPORT_ID IS NOT NULL
+                    OR E2.AUDIT_CREATED_AT > E1.AUDIT_CREATED_AT
+                )
+          )
     """
     )
     @Modifying
-    suspend fun deduplicate(duplicatesExportId: Long = 1): Int
+    suspend fun deduplicate(betriebsnummer: String, duplicatesExportId: Long = 1): Int
 
     /**
      * Weist Entgeltbescheinigungen einem Export zu.
@@ -74,7 +58,7 @@ interface EntgeltbescheinigungAuRepository :
     @Query(
         """
         UPDATE ENTGELTBESCHEINIGUNG_AU
-        SET EXPORT_ID =  :exportId
+        SET EXPORT_ID = :exportId
         WHERE ARBEITGEBER_BETRIEBSNUMMER = :betriebsnummer
         AND EXPORT_ID IS NULL
     """

@@ -7,10 +7,16 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flattenConcat
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -36,6 +42,7 @@ class ExportController(
         SupervisorJob() + Dispatchers.Default
     )
 
+    @OptIn(ExperimentalCoroutinesApi::class) // flatMapConcat
     @PostMapping("/export")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(
@@ -43,13 +50,13 @@ class ExportController(
         description = "Exportiert alle Meldungen im Hintergrund"
     )
     @NewSpan
-    @OptIn(ExperimentalCoroutinesApi::class) // flatMapMerge
     suspend fun export(): ResponseEntity<Unit> {
         log.debug { "POST /v1/meldung/export aufgerufen" }
 
-        applicationScope.launch {
+        val context = currentCoroutineContext() // propagate traceId
+        applicationScope.launch(context.minusKey(Job) + Dispatchers.Default) {
             exporters.asFlow()
-                .flatMapMerge(concurrency = 2) { it.export() }
+                .flatMapConcat { it.export() }
                 .flowOn(Dispatchers.IO)
                 .onCompletion { log.debug { "Export abgeschlossen" } }
                 .toList()

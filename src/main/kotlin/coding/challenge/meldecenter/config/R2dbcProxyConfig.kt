@@ -1,15 +1,14 @@
 package coding.challenge.meldecenter.config
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.micrometer.tracing.Span
-import io.micrometer.tracing.Tracer
+import io.micrometer.observation.Observation
+import io.micrometer.observation.ObservationRegistry
 import io.r2dbc.proxy.ProxyConnectionFactory
 import io.r2dbc.proxy.core.QueryExecutionInfo
-import io.r2dbc.proxy.listener.ProxyExecutionListener
+import io.r2dbc.proxy.listener.ProxyMethodExecutionListener
 import io.r2dbc.proxy.support.QueryExecutionInfoFormatter
 import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactory
-import io.r2dbc.spi.ConnectionFactoryOptions
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty
 import org.springframework.boot.autoconfigure.r2dbc.R2dbcConnectionDetails
 import org.springframework.context.annotation.Bean
@@ -23,60 +22,50 @@ private val log = KotlinLogging.logger {}
  */
 @Configuration
 @ConditionalOnBooleanProperty(prefix = "logging", name = ["r2dbc"])
-class R2dbcProxyConfig(private val tracer: Tracer) {
+class R2dbcProxyConfig(
+    private val observationRegistry: ObservationRegistry
+) {
 
+    private val queryObservationKey: String = "queryObservation"
     private val formatter = QueryExecutionInfoFormatter.showAll()
 
     @Bean
     @Primary
     fun connectionFactory(connectionDetails: R2dbcConnectionDetails): ConnectionFactory {
         val options = connectionDetails.connectionFactoryOptions
-        val dbName =
-            options.getValue(ConnectionFactoryOptions.DATABASE) as String?
-        val dbUser = options.getValue(ConnectionFactoryOptions.USER) as String?
         val original = ConnectionFactories.get(options)
 
         return ProxyConnectionFactory.builder(original)
-            .listener(object : ProxyExecutionListener {
+            .listener(object : ProxyMethodExecutionListener {
                 override fun beforeQuery(execInfo: QueryExecutionInfo) {
-                    val span = tracer.spanBuilder()
-                        .name("sql.query")
-                        .kind(Span.Kind.CLIENT)
-                        .tag("db.system", "postgresql")
-                        .tag("db.name", dbName ?: "")
-                        .tag("db.user", dbUser ?: "")
+                    val observation = Observation.start("sql.query", observationRegistry)
 
                     val queries = execInfo.queries
                     if (queries.isNotEmpty()) {
-                        span.tag(
+                        observation.highCardinalityKeyValue(
                             "db.statement",
                             queries.joinToString("; ") { it.query })
                     }
 
-                    val startedSpan = span.start()
-                    execInfo.valueStore.put(Span::class.java, startedSpan)
+                    execInfo.valueStore.put(queryObservationKey, observation)
                 }
 
                 override fun afterQuery(execInfo: QueryExecutionInfo) {
-                    val span =
-                        execInfo.valueStore.get(
-                            Span::class.java,
-                            Span::class.java
-                        )
+                    val observation = execInfo.valueStore[queryObservationKey] as Observation?
                     try {
-                        if (span != null) {
-                            tracer.withSpan(span).use {
+                        if (observation != null) {
+                            observation.openScope().use {
                                 log.trace { "SQL: ${formatter.format(execInfo)}" }
                             }
                         } else {
                             log.trace { "SQL: ${formatter.format(execInfo)}" }
                         }
 
-                        if (span != null && !execInfo.isSuccess) {
-                            execInfo.throwable?.let { span.error(it) }
+                        if (observation != null && !execInfo.isSuccess) {
+                            execInfo.throwable?.let { observation.error(it) }
                         }
                     } finally {
-                        span?.end()
+                        observation?.stop()
                     }
                 }
             })

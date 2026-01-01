@@ -40,3 +40,6 @@ out/
 
 ### MacOS ###
 .DS_Store
+
+### Test FTP files ###
+src/test/resources/ausgehend/ftp/*.xml

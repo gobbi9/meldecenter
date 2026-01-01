@@ -15,7 +15,7 @@ private val log = KotlinLogging.logger {}
  */
 @Service
 class EntgeltbescheinigungenAuExportAssigner(
-    private val entgeltbescheinigungAuRepository: EntgeltbescheinigungAuRepository,
+    private val repository: EntgeltbescheinigungAuRepository,
 ) {
     /**
      * Duplizierte Entgeltbescheinigungen werden ignoriert,
@@ -29,11 +29,8 @@ class EntgeltbescheinigungenAuExportAssigner(
         betriebsnummer: String,
         exportId: Long,
     ): Int {
-        val duplicateCount = entgeltbescheinigungAuRepository.deduplicate()
+        val duplicateCount = repository.deduplicate(betriebsnummer)
         log.debug { "Duplikate Anzahl dem Duplicates Export zugewiesen: $duplicateCount" }
-        return entgeltbescheinigungAuRepository.assignToExport(
-            betriebsnummer,
-            exportId
-        )
+        return repository.assignToExport(betriebsnummer, exportId)
     }
 }
